@@ -11,6 +11,7 @@ React UI 컴포넌트를 개발하고, 모노레포를 구성하여 개인 GitHu
 5. **Rollup 빌드**
 6. **Storybook 설정**
 7. **GitHub Packages 배포**
+8. (추가 구현) **버저닝 관리**
 
 ---
 
@@ -54,4 +55,4 @@ packages/my-docs 디렉토리에서 Storybook을 설정합니다. 이를 통해 
 
 1.	GitHub 계정에서 개인 토큰을 생성합니다.
 2.	프로젝트의 .npmrc 파일에 GitHub 패키지 레지스트리를 추가합니다.
-3.	lerna publish 명령어를 사용하여 패키지를 배포합니다.
+3.	lerna publish 또는 lerna version 명령어를 사용하여 패키지를 배포합니다.
