@@ -1,0 +1,25 @@
+{
+    "name": "@noah/my-components",
+    "version": "0.0.0",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/types/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "sideEffect": false,
+    "license": "ISC",
+    "scripts": {
+        "build": "yarn build:typings && rollup -c ../../rollup.config.js",
+        "build:typings": "rm -rf ./dist && tsc -p ./tsconfig.json"
+    },
+    "devDependencies": {
+        "@types/react": "^18.3.3",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
+    },
+    "peerDependencies": {
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
+    }
+}
