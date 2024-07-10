@@ -7,7 +7,9 @@
         "packages/*"
     ],
     "scripts": {
-        "lint": "npx eslint ./packages/*/src",
+        "dev": "yarn lint && yarn storybook",
+        "storybook": "lerna run storybook --scope @noah/my-docs --stream",
+        "lint": "npx eslint ./packages/*/src ./packages/*/stories --fix",
         "prepare": "husky"
     },
     "lint-staged": {
