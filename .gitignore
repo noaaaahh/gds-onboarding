@@ -1,0 +1,19 @@
+node_modules
+
+.vscode
+.python-version
+
+dist/
+
+*.lock
+*lock.json
+
+.env
+storybook-static
+
+## etc
+*.tsbuildinfo
+*.tgz
+*.log
+*.DS_Store
+.vercel
