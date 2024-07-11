@@ -6,9 +6,11 @@
     "workspaces": [
         "packages/*"
     ],
+    "author": "noahnoahchoi",
     "scripts": {
         "dev": "yarn lint && yarn storybook",
-        "storybook": "lerna run storybook --scope @noah/my-docs --stream",
+        "storybook": "lerna run storybook --scope @noahnoahchoi/my-docs --stream",
+        "build:components": "lerna run build --scope @noahnoahchoi/my-components --stream",
         "lint": "npx eslint ./packages/*/src ./packages/*/stories --fix",
         "prepare": "husky"
     },

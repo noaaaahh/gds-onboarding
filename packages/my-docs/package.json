@@ -1,7 +1,8 @@
 {
-    "name": "@noah/my-docs",
+    "name": "@noahnoahchoi/my-docs",
     "version": "0.0.0",
     "license": "ISC",
+    "author": "noahnoahchoi",
     "scripts": {
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build"
