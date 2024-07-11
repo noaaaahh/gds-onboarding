@@ -2,6 +2,7 @@ import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
+import postcss from 'rollup-plugin-postcss';
 
 import fs from 'fs';
 import { readPackageUpSync } from 'read-package-up';
@@ -55,7 +56,10 @@ function buildJS(input, output, format) {
         commonjs({ extensions }), // commonjs 코드를 es6로 변환
         nodeResolve({ extensions }), // 라이브러리에서 외부 의존성 사용하도록, 트리 셰이킹도 가능하게
         PeerDepsExternal(), // 피어 디펜던시를 빌드 결과에 포함하지 않음
-        terser(), // 번들 결과를 minify
+        terser(), // 번들 결과를 minify,
+        postcss({
+            modules: true,
+        }),
     ];
 
     return {
