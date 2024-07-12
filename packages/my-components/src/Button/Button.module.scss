@@ -1,0 +1,26 @@
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--Spacing-space-100, 8px);
+
+    height: var(--size-500, 40px);
+    padding: 0px var(--Spacing-space-200, 16px);
+    border-radius: var(--border-radius-300, 8px);
+
+    outline: 0;
+    border: 0;
+
+    &_primary {
+        background-color: var(--semantic-color-theme-primary, #448efe);
+        color: white;
+    }
+
+    &_link {
+        background-color: var(
+            --semantic-color-theme-hint-transparent-8,
+            rgba(108, 110, 126, 0.08)
+        );
+        color: #525463;
+    }
+}
