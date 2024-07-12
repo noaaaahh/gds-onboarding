@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react';
+import { WithChildren } from '../Dialog.types';
 
-export type DialogFooterProps = PropsWithChildren<{
+export type DialogFooterProps = WithChildren & {
     type?: 'default' | 'stacked';
-}>;
+};
