@@ -1,10 +1,50 @@
-import React from 'react';
+import {
+    Dialog as RadixDialog,
+    Portal as RadixPortal,
+    Content as RadixContent,
+    Overlay as RadixScrim,
+} from '@radix-ui/react-dialog';
 import cn from 'classnames';
+import React from 'react';
 
+import DialogContent from './DialogContent/DialogContent';
+import DialogFooter from './DialogFooter/DialogFooter';
+import DialogHeader from './DialogHeader/DialogHeader';
+
+import { DialogProps } from './Dialog.types';
 import styles from './Dialog.module.scss';
 
-const Dialog = () => {
-    return <div className={cn(styles.dialog)}>ddd</div>;
+const Dialog = ({
+    size = 'md',
+    preventScrimBehavior = false,
+    open,
+    onOpenChange,
+    children,
+    ...props
+}: DialogProps) => {
+    const dialogSizeStyle = styles[`wrapper_${size}`];
+    const handleScrimBehavior = (e: Event) => {
+        if (preventScrimBehavior) e.preventDefault();
+    };
+
+    return (
+        <RadixDialog open={open} onOpenChange={onOpenChange} {...props}>
+            <RadixPortal>
+                <RadixScrim className={styles.scrim} />
+                <RadixContent
+                    className={cn(styles.wrapper, dialogSizeStyle)}
+                    onPointerDownOutside={handleScrimBehavior}
+                    aria-describedby="hi"
+                >
+                    {children}
+                </RadixContent>
+            </RadixPortal>
+        </RadixDialog>
+    );
 };
+
+Dialog.Header = DialogHeader;
+Dialog.Content = DialogContent;
+Dialog.Footer = DialogFooter;
 
 export default Dialog;
