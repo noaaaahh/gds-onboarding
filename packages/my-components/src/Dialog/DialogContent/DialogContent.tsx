@@ -1,5 +1,5 @@
 import React, { Children, forwardRef, isValidElement, ReactNode } from 'react';
-import cn from 'classnames';
+import { clsx } from 'clsx';
 
 import styles from './DialogContent.module.scss';
 import { DialogContentProps } from './DialogContent.types';
@@ -18,7 +18,11 @@ const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         }
 
         return (
-            <div ref={ref} className={cn(styles.content, className)} {...props}>
+            <div
+                ref={ref}
+                className={clsx(styles.content, className)}
+                {...props}
+            >
                 {elements}
             </div>
         );
