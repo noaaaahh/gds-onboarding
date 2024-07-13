@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 
 import styles from './Button.module.scss';
-import cn from 'classnames';
+import { clsx } from 'clsx';
 
 type ButtonProps = {
     variant?: 'primary' | 'link';
@@ -10,7 +10,10 @@ type ButtonProps = {
 const Button = ({ variant = 'primary', ...props }: ButtonProps) => {
     const buttonVariantStyle = styles[`button_${variant}`];
     return (
-        <button className={cn(styles.button, buttonVariantStyle)} {...props} />
+        <button
+            className={clsx(styles.button, buttonVariantStyle)}
+            {...props}
+        />
     );
 };
 
