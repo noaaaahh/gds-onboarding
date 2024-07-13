@@ -4,7 +4,7 @@ import {
     Content as RadixContent,
     Overlay as RadixScrim,
 } from '@radix-ui/react-dialog';
-import cn from 'classnames';
+import { clsx } from 'clsx';
 import React from 'react';
 
 import DialogContent from './DialogContent/DialogContent';
@@ -32,7 +32,7 @@ const Dialog = ({
             <RadixPortal>
                 <RadixScrim className={styles.scrim} />
                 <RadixContent
-                    className={cn(styles.wrapper, dialogSizeStyle)}
+                    className={clsx(styles.wrapper, dialogSizeStyle)}
                     onPointerDownOutside={handleScrimBehavior}
                     aria-describedby="hi"
                 >
