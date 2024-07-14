@@ -7,6 +7,7 @@ import postcss from 'rollup-plugin-postcss';
 import fs from 'fs';
 import { readPackageUpSync } from 'read-package-up';
 import PeerDepsExternal from 'rollup-plugin-peer-deps-external';
+import path from 'path';
 
 const input = 'index.ts';
 
@@ -22,6 +23,7 @@ function buildJS(input, output, format) {
 
     const esOutputConfig = {
         ...defaultOutputConfig,
+        preserveModulesRoot: path.dirname(input),
         dir: output,
     };
 
