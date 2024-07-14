@@ -10,7 +10,7 @@
     "scripts": {
         "dev": "yarn storybook",
         "storybook": "lerna run storybook --scope @noahnoahchoi/my-docs --stream",
-        "publish": "lerna publish from-package --yes",
+        "publish": "lerna publish",
         "build:components": "lerna run build --scope @noahnoahchoi/my-components --stream",
         "lint": "npx eslint ./packages/*/src ./packages/*/stories --fix",
         "prepare": "husky"
