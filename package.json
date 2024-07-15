@@ -11,8 +11,6 @@
         "dev": "yarn storybook",
         "storybook": "lerna run storybook --scope @noahnoahchoi/my-docs --stream",
         "build:components": "lerna run build --scope @noahnoahchoi/my-components --stream",
-        "version": "lerna version",
-        "version:release": "git flow release publish && yarn run version",
         "lint": "npx eslint ./packages/*/src ./packages/*/stories --fix",
         "prepare": "husky"
     },
