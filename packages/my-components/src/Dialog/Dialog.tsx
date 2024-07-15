@@ -7,9 +7,9 @@ import {
 import { clsx } from 'clsx';
 import React from 'react';
 
-import DialogContent from './DialogContent/DialogContent';
-import DialogFooter from './DialogFooter/DialogFooter';
-import DialogHeader from './DialogHeader/DialogHeader';
+import DialogContent from './DialogContent';
+import DialogFooter from './DialogFooter';
+import DialogHeader from './DialogHeader';
 
 import { DialogProps } from './Dialog.types';
 import styles from './Dialog.module.scss';
