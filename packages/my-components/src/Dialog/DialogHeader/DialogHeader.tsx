@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { DialogHeaderProps } from './DialogHeader.types';
 import styles from './DialogHeader.module.scss';
@@ -23,19 +23,24 @@ const CloseIcon = () => {
     );
 };
 
-const DialogHeader = ({ showClose = true, children }: DialogHeaderProps) => {
-    return (
-        <div className={styles.header}>
-            <DialogTitle className={styles[`header_title`]}>
-                {children}
-            </DialogTitle>
-            {showClose && (
-                <DialogClose className={styles[`header_close`]}>
-                    <CloseIcon />
-                </DialogClose>
-            )}
-        </div>
-    );
-};
+const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
+    ({ showClose = true, children }, ref) => {
+        return (
+            <div ref={ref} className={styles.header}>
+                <DialogTitle className={styles[`header_title`]}>
+                    {children}
+                </DialogTitle>
+
+                {showClose && (
+                    <DialogClose className={styles[`header_close`]}>
+                        <CloseIcon />
+                    </DialogClose>
+                )}
+            </div>
+        );
+    },
+);
+
+DialogHeader.displayName = 'DialogHeader';
 
 export default DialogHeader;

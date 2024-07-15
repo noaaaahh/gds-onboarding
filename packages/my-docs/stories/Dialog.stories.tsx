@@ -6,6 +6,7 @@ import { Button, Dialog } from '@noahnoahchoi/my-components';
 const meta: Meta<typeof Dialog> = {
     title: 'Dialog',
     component: Dialog,
+    tags: ['autodocs'],
     parameters: {
         docs: {
             description: {
