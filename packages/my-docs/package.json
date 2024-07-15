@@ -25,6 +25,6 @@
         "vite": "^5.3.3"
     },
     "dependencies": {
-        "noahnoahchoi/my-components": "file:../my-components"
+        "@noahnoahchoi/my-components": "^0.1.3"
     }
 }
