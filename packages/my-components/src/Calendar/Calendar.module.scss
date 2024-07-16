@@ -1,0 +1,235 @@
+/** react-calendar 전체 **/
+:global {
+    .react-calendar {
+        width: 100%;
+        min-width: 19.5rem /* 312px -> 19.5rem */;
+        max-width: 19.5rem /* 312px -> 19.5rem */;
+        background: var(--background-normal, #ffffff);
+        border: none;
+        box-sizing: border-box;
+        padding: 0.75rem /* 0.75rem -> .75rem */ 0px;
+    }
+    .react-calendar--doubleView {
+        width: 43.75rem /* 700px -> 43.75rem */;
+    }
+    .react-calendar--doubleView .react-calendar__viewContainer {
+        display: flex;
+        margin: -0.5em;
+    }
+    .react-calendar--doubleView .react-calendar__viewContainer > * {
+        width: 50%;
+        margin: 0.5em;
+    }
+    .react-calendar,
+    .react-calendar *,
+    .react-calendar *:before,
+    .react-calendar *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .react-calendar button {
+        border: 0;
+        outline: none;
+        font-weight: 500;
+    }
+    .react-calendar button:enabled:hover {
+        cursor: pointer;
+    }
+
+    /** 상단 navigation  **/
+    .react-calendar__navigation {
+        display: flex;
+        height: auto;
+        margin: 0 0 13px 0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 0 1rem;
+    }
+    .react-calendar__navigation button {
+        min-width: 2.75rem /* 44px -> 2.75rem */;
+        background: none;
+        border-radius: 0.1875rem;
+        color: var(--text-alternative, #525463);
+    }
+    .react-calendar__navigation button > svg {
+        color: var(--gray-900, #2b2d36);
+    }
+    .react-calendar__navigation button:enabled:hover {
+        background: var(--gray-400-transparent-16, #cdced629);
+    }
+    .react-calendar__navigation button:enabled:focus {
+        color: var(--primar, #448efe);
+    }
+    .react-calendar__navigation button:disabled {
+        background-color: transparent;
+    }
+    .react-calendar__navigation button:disabled > svg {
+        color: var(--gray-800-transparent-32, #3e404c52);
+    }
+    .react-calendar__navigation__label {
+        padding: 0.5625rem 0px;
+    }
+    .react-calendar__navigation__next2-button,
+    .react-calendar__navigation__prev2-button {
+        display: none;
+    }
+
+    /** 요일 관련 **/
+    .react-calendar__month-view__weekdays {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 0.75em;
+        border-bottom: 1px solid var(--border-color, rgb(225, 225, 232));
+        padding: 0 1rem 0.25rem 1rem;
+    }
+    .react-calendar__month-view__weekdays__weekday {
+        height: var(--size-500, 40px);
+        padding: 0px var(--space-150, 12px);
+        display: flex;
+        align-items: center;
+    }
+    .react-calendar__month-view__weekdays__weekday > abbr {
+        text-decoration: none;
+        color: var(--text-hint, rgb(133, 136, 153));
+        font-size: 0.875rem /* 14px -> .875rem */;
+        font-weight: 500;
+    }
+
+    /**하단 date 관련 - 최상단 tile **/
+    .react-calendar__tile {
+        max-width: 100%;
+        text-align: center;
+        padding: 0 var(--space-150, 12px);
+        background: none;
+        margin-top: 0.25rem;
+        color: var(--text-normal, #2b2d36);
+        height: var(--size-500, 40px);
+    }
+    .react-calendar__tile:enabled:hover {
+        background: var(--link-transparent-16, rgba(133, 136, 153, 0.16));
+        color: var(--text-normal, #2b2d36);
+        border-radius: 0.1875rem;
+    }
+    .react-calendar__tile:enabled:focus {
+        background: var(--primary-transparent-24, rgba(80, 148, 250, 0.24));
+        color: var(--text-primary-alternative, rgb(29, 108, 224));
+    }
+    .react-calendar__tile--now {
+        color: var(--text-primary-alternative, rgb(29, 108, 224));
+    }
+    .react-calendar__tile--now:enabled:hover,
+    .react-calendar__tile--now:enabled:focus {
+    }
+
+    .react-calendar__tile--active {
+        background: var(--primary-transparent-8, rgba(80, 148, 250, 0.08));
+        color: var(--text-primary-alternative, rgb(29, 108, 224));
+        border-radius: 0px;
+    }
+    .react-calendar__month-view__days__day--neighboringMonth
+        .react-calendar__tile--active {
+        color: var(--primary-active, rgb(29, 108, 224));
+    }
+    .react-calendar__tile--active:enabled:hover,
+    .react-calendar__tile--active:enabled:focus {
+        background: var(--primary-transparent-8, rgba(80, 148, 250, 0.08));
+        color: var(--text-primary-alternative, rgb(29, 108, 224));
+        border-radius: 0px;
+    }
+
+    .react-calendar__tile--hasActive {
+        color: var(--text-primary-alternative, rgb(29, 108, 224));
+        background: var(--primary-transparent-24, rgba(80, 148, 250, 0.24));
+        border-radius: 0.1875rem;
+    }
+    .react-calendar__tile--hasActive:enabled:hover,
+    .react-calendar__tile--hasActive:enabled:focus {
+        color: var(--text-primary-alternative, rgb(29, 108, 224));
+        background: var(--primary-transparent-8, rgba(80, 148, 250, 0.08));
+        border-radius: 0.1875rem;
+    }
+    .react-calendar__tile--rangeStart {
+        background: var(--primary-transparent-24, rgba(80, 148, 250, 0.24));
+        border-radius: 0.1875rem 0 0 0.1875rem;
+    }
+    .react-calendar__tile--rangeStart:enabled:hover,
+    .react-calendar__tile--rangeStart:enabled:focus {
+        background: var(--primary-transparent-24, rgba(80, 148, 250, 0.24));
+        border-radius: 0.1875rem 0 0 0.1875rem;
+    }
+    .react-calendar__tile--rangeEnd {
+        background: var(--primary-transparent-8, rgba(80, 148, 250, 0.08));
+        border-radius: 0 0.1875rem 0.1875rem 0;
+    }
+    .react-calendar__tile--rangeEnd:enabled:hover,
+    .react-calendar__tile--rangeEnd:enabled:focus {
+        background: var(--primary-transparent-24, rgba(80, 148, 250, 0.24));
+        border-radius: 0 0.1875rem 0.1875rem 0;
+    }
+    .react-calendar__tile--rangeBothEnds {
+        border-radius: 0.1875rem;
+    }
+    .react-calendar__tile--rangeBothEnds:enabled:focus {
+        border-radius: 0.1875rem;
+    }
+
+    /** 하단 date 관련 - month view **/
+    .react-calendar__month-view__weekNumbers {
+        font-weight: bold;
+    }
+    .react-calendar__month-view__weekNumbers .react-calendar__tile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75em;
+        padding: calc(0.75em / 0.75) calc(0.5em / 0.75);
+    }
+    .react-calendar__month-view__days {
+        padding: 0.25rem 1rem;
+    }
+    .react-calendar__month-view__days__day:disabled {
+        background: var(--link-transparent-8, rgba(133, 136, 153, 0.08));
+        color: var(--gray-400, rgb(205, 206, 214));
+    }
+    .react-calendar__month-view__days__day--weekend {
+    }
+    .react-calendar__month-view__days__day--neighboringMonth {
+        color: var(--gray-400, rgb(205, 206, 214));
+    }
+
+    /** 하단 date 관련 - year view **/
+    .react-calendar__year-view {
+        padding: 0.75rem 1rem;
+    }
+    .react-calendar__year-view .react-calendar__tile {
+        padding: 0.5625rem 1.1875rem;
+        flex-basis: 25% !important;
+        max-width: 25% !important;
+    }
+    .react-calendar__year-view .react-calendar__tile:disabled {
+        color: var(--gray-400, rgb(205, 206, 214));
+        background: transparent;
+    }
+
+    /** 하단 date 관련 - decade view **/
+    /** 하단 date 관련 - century view **/
+    .react-calendar__decade-view,
+    .react-calendar__century-view {
+        padding: 0.75rem 1rem;
+    }
+    .react-calendar__decade-view .react-calendar__tile,
+    .react-calendar__century-view .react-calendar__tile {
+        flex-basis: 25% !important;
+        max-width: 25% !important;
+        padding: 0.5625rem 1.1875rem;
+    }
+    .react-calendar__decade-view .react-calendar__tile:disabled {
+        color: var(--gray-400, rgb(205, 206, 214));
+        background: transparent;
+    }
+    .react-calendar__century-view .react-calendar__tile:disabled {
+        color: var(--gray-400, rgb(205, 206, 214));
+        background: transparent;
+    }
+}
