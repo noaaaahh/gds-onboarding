@@ -33,7 +33,7 @@ function buildJS(input, output, format) {
     };
 
     const externals = () => {
-        const defaultExternal = [/@babel\/runtime/];
+        const defaultExternal = [];
         const dependencies = Object.keys(pkg?.dependencies || {});
         const peerDependencies = Object.keys(pkg?.peerDependencies || {});
 
@@ -45,15 +45,13 @@ function buildJS(input, output, format) {
     const plugins = [
         // 바벨 설정
         babel({
-            babelHelpers: 'runtime', // 바벨 헬퍼 함수를 번들 결과에 포함하지 않음
-            exclude: 'node_modules/**',
+            babelHelpers: 'bundled', // runtime: 바벨 헬퍼 함수를 번들 결과에 포함하지 않음 / bundled: 번들 결과에 포함함
             extensions,
             presets: [
                 '@babel/preset-env', // es6 compile
                 '@babel/preset-react', // react compile
                 '@babel/preset-typescript', // typescript compile
             ],
-            plugins: ['@babel/plugin-transform-runtime'],
         }),
         commonjs({ extensions }), // commonjs 코드를 es6로 변환
         nodeResolve({ extensions }), // 라이브러리에서 외부 의존성 사용하도록, 트리 셰이킹도 가능하게
