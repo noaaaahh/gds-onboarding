@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+import { ComponentProps, ReactNode } from 'react';
+import NoBody from '../NoBody';
 
 export type Locale = 'ko' | 'ja' | 'en';
 export type Mode = 'single' | 'range';
@@ -26,3 +27,6 @@ export type DatePickerProviderProps = {
     onChangeDate: (date: DatePickerDate) => void;
     children: ReactNode;
 };
+
+export type DatePickerProps = DatePickerProviderProps &
+    ComponentProps<typeof NoBody>;
