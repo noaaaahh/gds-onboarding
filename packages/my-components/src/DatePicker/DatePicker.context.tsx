@@ -9,20 +9,6 @@ import {
 } from './DatePicker.types';
 import once from 'lodash.once';
 
-// Context
-// const DatePickerContext = createContext<DatePickerContextType>({
-//     date: undefined,
-//     currentFocus: '',
-//     handleFocus: () => {},
-//     defaultDate: undefined,
-//     handleChange: () => {},
-//     mode: 'single',
-//     locale: 'ko',
-//     initializeRange: () => {},
-//     minDate: undefined,
-//     maxDate: undefined,
-// });
-
 const createDatePickerContext = once(<T extends DateValue | RangeDateValue>() =>
     createContext<DatePickerContextType<T>>({} as DatePickerContextType<T>),
 );
@@ -41,13 +27,7 @@ const DatePickerProvider = <T extends DateValue | RangeDateValue>({
     });
 
     const handleChange = (nextDate: T) => {
-        //! mode range는 일단 무시
-
-        if (mode === 'range') {
-            console.log(nextDate);
-        } else {
-            onChangeDate?.(nextDate);
-        }
+        onChangeDate?.(nextDate);
     };
 
     const initializeRange = ({ minDate, maxDate }: InitializeRangeProps) => {
