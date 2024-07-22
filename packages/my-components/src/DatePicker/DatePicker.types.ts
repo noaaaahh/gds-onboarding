@@ -4,7 +4,7 @@ import NoBody from '../NoBody';
 export type Locale = 'ko' | 'ja' | 'en';
 export type Mode = 'single' | 'range';
 
-export type DatePickerDate = Date | [Date, Date] | null;
+export type DateValue = Date | [Date, Date] | null;
 
 export type InitializeRangeProps = {
     minDate: Date | undefined;
@@ -12,9 +12,9 @@ export type InitializeRangeProps = {
 };
 
 export type DatePickerContextType = {
-    date: DatePickerDate;
-    defaultDate: DatePickerDate;
-    handleChange: (date: DatePickerDate) => void;
+    date: DateValue;
+    defaultDate: DateValue;
+    handleChange: (date: DateValue) => void;
     initializeRange: (range: InitializeRangeProps) => void;
     mode?: Mode;
     locale: Locale;
@@ -23,8 +23,8 @@ export type DatePickerContextType = {
 export type DatePickerProviderProps = {
     mode?: Mode;
     locale?: Locale;
-    date: DatePickerDate;
-    onChangeDate: (date: DatePickerDate) => void;
+    date: DateValue;
+    onChangeDate: (date: DateValue) => void;
     children: ReactNode;
 };
 

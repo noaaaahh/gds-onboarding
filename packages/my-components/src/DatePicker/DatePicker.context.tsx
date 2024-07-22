@@ -2,7 +2,7 @@ import React, { useContext, useState, createContext, useEffect } from 'react';
 
 import {
     DatePickerContextType,
-    DatePickerDate,
+    DateValue,
     DatePickerProviderProps,
     InitializeRangeProps,
 } from './DatePicker.types';
@@ -26,13 +26,13 @@ const DatePickerProvider = ({
     locale = 'ko',
     children,
 }: DatePickerProviderProps) => {
-    const [defaultDate, setDefaultDate] = useState<DatePickerDate | null>(null);
+    const [defaultDate, setDefaultDate] = useState<DateValue | null>(null);
     const [range, setRange] = useState<InitializeRangeProps>({
         minDate: new Date('1970.01.01'),
         maxDate: new Date('2999.12.31'),
     });
 
-    const handleChange = (date: DatePickerDate) => {
+    const handleChange = (date: DateValue) => {
         //! mode range는 일단 무시
         onChangeDate?.(date);
     };

@@ -1,2 +1,2 @@
 export { default } from './DatePicker';
-export { type DatePickerDate } from './DatePicker.types';
+export { type DateValue } from './DatePicker.types';
