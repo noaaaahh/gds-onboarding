@@ -45,12 +45,12 @@ const DatePickerInput = ({
     };
 
     const handleClose = () => {
-        handleChange(null);
+        handleChange(undefined);
     };
 
     const validate = (value: string) => {
         if (value === '') {
-            handleChange(null);
+            handleChange(undefined);
             setInputState('default');
             return;
         }
