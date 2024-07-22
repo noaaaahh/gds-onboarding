@@ -35,11 +35,7 @@ export const Default: Story = {
                             value={date?.toLocaleString('ja')}
                         />
                     </DatePicker.Trigger>
-                    <DatePicker.Content
-                        side="top"
-                        sideOffset={10}
-                        align="start"
-                    >
+                    <DatePicker.Content>
                         <DatePicker.Header>
                             <DatePicker.Input placeholder="시작일" />
                             {/* <DatePicker.Input target="from" /> */}
