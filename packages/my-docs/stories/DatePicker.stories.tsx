@@ -19,7 +19,7 @@ type Story = StoryObj<typeof DatePicker>;
 export const Default: Story = {
     render: () => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [date, setDate] = useState<DateValue>(null);
+        const [date, setDate] = useState<DateValue>();
 
         return (
             <div style={{ width: '500px', height: '1000vh' }}>
