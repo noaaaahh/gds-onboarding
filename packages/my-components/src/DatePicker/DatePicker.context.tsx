@@ -2,39 +2,32 @@ import React, { useContext, useState, createContext, useEffect } from 'react';
 
 import {
     DatePickerContextType,
-    DatePickerDate,
     DatePickerProviderProps,
+    DateValue,
     InitializeRangeProps,
+    RangeDateValue,
 } from './DatePicker.types';
+import once from 'lodash.once';
 
-// Context
-const DatePickerContext = createContext<DatePickerContextType>({
-    date: null,
-    defaultDate: null,
-    handleChange: () => {},
-    mode: 'single',
-    locale: 'ko',
-    initializeRange: () => {},
-    minDate: undefined,
-    maxDate: undefined,
-});
-
-const DatePickerProvider = ({
+const createDatePickerContext = once(<T extends DateValue | RangeDateValue>() =>
+    createContext<DatePickerContextType<T>>({} as DatePickerContextType<T>),
+);
+const DatePickerProvider = <T extends DateValue | RangeDateValue>({
     date,
     onChangeDate,
-    mode = 'single',
+    mode,
     locale = 'ko',
     children,
-}: DatePickerProviderProps) => {
-    const [defaultDate, setDefaultDate] = useState<DatePickerDate | null>(null);
+}: DatePickerProviderProps<T>) => {
+    const DatePickerContext = createDatePickerContext<T>();
+    const [defaultDate, setDefaultDate] = useState<T>(date);
     const [range, setRange] = useState<InitializeRangeProps>({
         minDate: new Date('1970.01.01'),
         maxDate: new Date('2999.12.31'),
     });
 
-    const handleChange = (date: DatePickerDate) => {
-        //! mode range는 일단 무시
-        onChangeDate?.(date);
+    const handleChange = (nextDate: T) => {
+        onChangeDate?.(nextDate);
     };
 
     const initializeRange = ({ minDate, maxDate }: InitializeRangeProps) => {
@@ -67,7 +60,7 @@ const DatePickerProvider = ({
 export default DatePickerProvider;
 
 export const useDatePicker = () => {
-    const context = useContext(DatePickerContext);
+    const context = useContext(createDatePickerContext());
 
     if (!context) throw new Error('can not find DatePickerContext');
 

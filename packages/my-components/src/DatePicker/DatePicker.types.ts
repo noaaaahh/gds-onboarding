@@ -4,29 +4,30 @@ import NoBody from '../NoBody';
 export type Locale = 'ko' | 'ja' | 'en';
 export type Mode = 'single' | 'range';
 
-export type DatePickerDate = Date | [Date, Date] | null;
+export type DateValue = Date | undefined;
+export type RangeDateValue = [Date | undefined, Date | undefined];
 
 export type InitializeRangeProps = {
     minDate: Date | undefined;
     maxDate: Date | undefined;
 };
 
-export type DatePickerContextType = {
-    date: DatePickerDate;
-    defaultDate: DatePickerDate;
-    handleChange: (date: DatePickerDate) => void;
+export type DatePickerContextType<T extends DateValue | RangeDateValue> = {
+    date: T;
+    defaultDate: T;
+    handleChange: (date: T) => void;
     initializeRange: (range: InitializeRangeProps) => void;
     mode?: Mode;
     locale: Locale;
 } & InitializeRangeProps;
 
-export type DatePickerProviderProps = {
+export type DatePickerProviderProps<T> = {
     mode?: Mode;
     locale?: Locale;
-    date: DatePickerDate;
-    onChangeDate: (date: DatePickerDate) => void;
+    date: T;
+    onChangeDate: (date: T) => void;
     children: ReactNode;
 };
 
-export type DatePickerProps = DatePickerProviderProps &
+export type DatePickerProps<T> = DatePickerProviderProps<T> &
     ComponentProps<typeof NoBody>;

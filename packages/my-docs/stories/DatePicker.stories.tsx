@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import DatePicker from '../../my-components/src/DatePicker';
 import Button from '../../my-components/src/Button';
-import { type DatePickerDate } from '../../my-components/src/DatePicker';
+import { type DateValue } from '../../my-components/src/DatePicker';
 
 const meta: Meta<typeof DatePicker> = {
     title: 'DatePicker',
@@ -19,7 +19,7 @@ type Story = StoryObj<typeof DatePicker>;
 export const Default: Story = {
     render: () => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [date, setDate] = useState<DatePickerDate>(null);
+        const [date, setDate] = useState<DateValue>();
 
         return (
             <div style={{ width: '500px', height: '1000vh' }}>
@@ -31,15 +31,11 @@ export const Default: Story = {
                     <DatePicker.Trigger>
                         <DatePicker.Input
                             asTrigger
-                            placeholder="시작일"
+                            placeholder="기간 선택"
                             value={date?.toLocaleString('ja')}
                         />
                     </DatePicker.Trigger>
-                    <DatePicker.Content
-                        side="top"
-                        sideOffset={10}
-                        align="start"
-                    >
+                    <DatePicker.Content>
                         <DatePicker.Header>
                             <DatePicker.Input placeholder="시작일" />
                             {/* <DatePicker.Input target="from" /> */}

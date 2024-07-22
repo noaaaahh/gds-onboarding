@@ -5,14 +5,14 @@ import DatePickerProvider from './DatePicker.context';
 import DatePickerCalendar from './DatePickerCalendar';
 import DatePickerFooter from './DatePickerFooter';
 import DatePickerHeader from './DatePickerHeader';
-import DatePickerReset from './DatePickerReset/DatePickerReset';
+import DatePickerReset from './DatePickerReset';
 import DatePickerTrigger from './DatePickerTrigger';
 import DatePickerInput from './DatePickerInput';
-
-import { DatePickerProps } from './DatePicker.types';
 import DatePickerContent from './DatePickerContent';
 
-const DatePicker = ({
+import { DatePickerProps, DateValue, RangeDateValue } from './DatePicker.types';
+
+const DatePicker = <T extends DateValue | RangeDateValue>({
     // NoBody props
     open,
     onOpenChange,
@@ -21,8 +21,9 @@ const DatePicker = ({
 
     // DatePickerProvider Props
     children,
+    date,
     ...props
-}: DatePickerProps) => {
+}: DatePickerProps<T>) => {
     return (
         <NoBody
             open={open}
@@ -30,7 +31,9 @@ const DatePicker = ({
             defaultOpen={defaultOpen}
             modal={modal}
         >
-            <DatePickerProvider {...props}>{children}</DatePickerProvider>
+            <DatePickerProvider<typeof date> date={date} {...props}>
+                {children}
+            </DatePickerProvider>
         </NoBody>
     );
 };

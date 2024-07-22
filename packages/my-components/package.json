@@ -34,7 +34,9 @@
     "dependencies": {
         "@radix-ui/react-dialog": "^1.1.1",
         "@radix-ui/react-popover": "^1.1.1",
+        "@types/lodash.once": "^4.1.9",
         "clsx": "^2.1.1",
+        "lodash.once": "^4.1.1",
         "react-calendar": "^5.0.0"
     }
 }
