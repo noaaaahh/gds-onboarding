@@ -1,15 +1,20 @@
 import React, { ComponentProps, useEffect } from 'react';
+import { LooseValue } from 'react-calendar/dist/cjs/shared/types';
 
 import Calendar from '../../Calendar';
 import { useDatePicker } from '../DatePicker.context';
-import { LooseValue } from 'react-calendar/dist/cjs/shared/types';
+import { DateValue, RangeDateValue } from '../DatePicker.types';
+import styles from './DatePickerCalendar.module.scss';
+
+type ModeDate<T> = T extends 'single' ? DateValue : RangeDateValue;
 
 const DatePickerCalendar = ({
     maxDate,
     minDate,
     ...props
 }: ComponentProps<typeof Calendar>) => {
-    const { date, handleChange, locale, initializeRange } = useDatePicker();
+    const { date, handleChange, mode, locale, initializeRange } =
+        useDatePicker();
 
     useEffect(() => {
         initializeRange({ maxDate, minDate });
@@ -19,10 +24,13 @@ const DatePickerCalendar = ({
     return (
         <Calendar
             value={date as LooseValue}
-            onChange={(date) => handleChange(date as Date)}
+            allowPartialRange
+            onChange={(date) => handleChange(date as ModeDate<typeof mode>)}
             locale={locale}
             minDate={minDate}
             maxDate={maxDate}
+            selectRange={mode === 'range'}
+            className={styles.calendar}
             {...props}
         />
     );
