@@ -41,16 +41,14 @@
         background-clip: padding-box;
         border: 0.0625rem solid var(--border-color, rgb(225, 225, 232));
         border-radius: 0.5rem;
-        transition:
-            border-color 0.25s ease,
-            box-shadow 0.25s ease;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
         &:not(&--invalid):hover {
             border-color: var(--semantic-color-border-border-hover, #cdced6);
             outline: 0;
         }
 
-        &:not(&_trigger):not(&--invalid):focus-within {
+        &:not(&--invalid):focus-within {
             border: 1px solid var(--primary, rgb(80, 148, 250));
             outline: 0;
         }

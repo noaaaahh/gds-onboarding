@@ -12,30 +12,34 @@ import { useDatePicker } from '../DatePicker.context';
 import {
     constrainDateToRange,
     dateFormat,
+    getSortedDates,
+    isDateValue,
     isValidDate,
 } from '../DatePicker.utils';
 
 import styles from './DatePickerInput.module.scss';
 import IconBase from '../../Icon/IconBase';
+import { RangeDateValue } from '../DatePicker.types';
 
+type InputState = 'default' | 'invalid' | 'valid';
 type DatePickerInputProps = ComponentProps<'input'> & {
-    asTrigger?: boolean;
+    target?: 'start' | 'end';
 };
 
 const DATE_REGEX = new RegExp(/^[0-9./]*$/);
 
 const DatePickerInput = ({
-    asTrigger,
+    target,
     className,
     ...props
 }: DatePickerInputProps) => {
+    const CURRENT_INPUT_INDEX = target === 'start' ? 0 : 1;
     const { date, locale, minDate, maxDate, handleChange } = useDatePicker();
-    const [inputState, setInputState] = useState<
-        'default' | 'invalid' | 'valid'
-    >('default');
-    const [inputValue, setInputValue] = useState(
-        dateFormat(date as Date, locale) || '',
-    );
+    const [inputState, setInputState] = useState<InputState>('default');
+    const [inputValue, setInputValue] = useState(() => {
+        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
+        return dateFormat(targetDate, locale);
+    });
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const currentValue = e.target.value;
@@ -45,120 +49,90 @@ const DatePickerInput = ({
     };
 
     const handleClose = () => {
-        handleChange(undefined);
+        if (isDateValue(date)) return handleChange(undefined);
+
+        const nextDate = [...date] satisfies RangeDateValue;
+        nextDate[CURRENT_INPUT_INDEX] = undefined;
+        handleChange(nextDate);
     };
 
-    const validate = (value: string) => {
-        if (value === '') {
-            handleChange(undefined);
-            setInputState('default');
-            return;
-        }
+    const parseTextToDate = (value: string) => {
+        if (value === '') return handleClose();
 
         const isValid = isValidDate(value, locale);
-        if (!isValid) {
-            return setInputState('invalid');
-        }
+        if (!isValid) return setInputState('invalid');
 
         const nextDate = constrainDateToRange({ value, minDate, maxDate });
+        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
 
-        if (nextDate === date) {
+        if (targetDate === nextDate) {
             const nextInputValue = dateFormat(nextDate, locale);
-            setInputValue(nextInputValue || '');
+            setInputValue(nextInputValue);
         }
 
-        handleChange(nextDate);
+        if (isDateValue(date)) {
+            handleChange(nextDate);
+        } else {
+            const copiedDate = [...date] satisfies RangeDateValue;
+            copiedDate[CURRENT_INPUT_INDEX] = nextDate;
+
+            const sortedNextDate = getSortedDates(copiedDate);
+            handleChange(sortedNextDate);
+        }
+
         setInputState('valid');
     };
 
     const onBlur = (e: FocusEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        validate(value);
+        parseTextToDate(value);
     };
 
     const onPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key !== 'Enter') return;
 
         const value = e.currentTarget.value;
-        validate(value);
+        parseTextToDate(value);
     };
 
     useEffect(() => {
-        const nextValue = dateFormat(date as Date, locale) || '';
+        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
+        const nextValue = dateFormat(targetDate, locale);
 
         setInputValue(nextValue);
         setInputState(nextValue ? 'valid' : 'default');
-    }, [date, locale]);
-
-    if (asTrigger) {
-        return (
-            <DatePickerField
-                value={inputValue || ''}
-                inputState="default"
-                className={clsx(styles.input_trigger, className)}
-                icon={<CalendarIcon />}
-                iconSide="left"
-                readOnly
-                placeholder={props.placeholder}
-            />
-        );
-    }
+    }, [CURRENT_INPUT_INDEX, date, locale]);
 
     return (
-        <DatePickerField
+        <div
             className={clsx(
+                styles.DatePickerField,
                 styles[`DatePickerField--${inputState}`],
-                className,
             )}
-            value={inputValue || ''}
-            inputState={inputState}
-            onChange={onChange}
-            onKeyDown={onPressEnter}
-            onBlur={onBlur}
-            icon={
-                inputState === 'valid' ? (
-                    <ErrorCircleIcon handleClose={handleClose} />
-                ) : (
-                    <CalendarIcon />
-                )
-            }
-            iconSide={inputState === 'valid' ? 'right' : 'left'}
-            {...props}
-        />
-    );
-};
-
-export default DatePickerInput;
-
-type DatePickerFieldProps = ComponentProps<'input'> & {
-    inputState: 'default' | 'invalid' | 'valid';
-    icon: JSX.Element;
-    iconSide: 'left' | 'right';
-};
-
-const DatePickerField = ({
-    inputState,
-    icon,
-    iconSide,
-    className,
-    ...props
-}: DatePickerFieldProps) => {
-    return (
-        <div className={clsx(styles.DatePickerField)}>
-            {icon}
+        >
+            {inputState === 'valid' ? (
+                <ErrorCircleIcon handleClose={handleClose} />
+            ) : (
+                <CalendarIcon />
+            )}
             <input
                 className={clsx(
                     styles.DatePickerField__input,
                     styles[`DatePickerField__input--${inputState}`],
                     className,
                 )}
+                value={inputValue || ''}
+                onChange={onChange}
+                onKeyDown={onPressEnter}
+                onBlur={onBlur}
                 type="text"
                 {...props}
             />
-            {iconSide === 'right' && icon}
         </div>
     );
 };
+
+export default DatePickerInput;
 
 const ErrorCircleIcon = ({ handleClose }: { handleClose: () => void }) => {
     return (

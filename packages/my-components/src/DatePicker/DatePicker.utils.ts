@@ -1,4 +1,9 @@
-import { InitializeRangeProps, Locale } from './DatePicker.types';
+import {
+    DateValue,
+    InitializeRangeProps,
+    Locale,
+    RangeDateValue,
+} from './DatePicker.types';
 
 // *** 한자리수 월/일 -> 0 채워주기
 const datePads = (value: number) => {
@@ -6,9 +11,9 @@ const datePads = (value: number) => {
 };
 
 // *** 날짜 formating
-export const dateFormat = (date: Date, locale: Locale) => {
+export const dateFormat = (date: DateValue, locale: Locale) => {
     if (!date) {
-        return null;
+        return '';
     }
     const formatDate = date;
 
@@ -59,4 +64,23 @@ export const constrainDateToRange = ({
     if (maxDate && date > maxDate) return maxDate;
 
     return date;
+};
+
+export const isDateValue = (
+    date: DateValue | RangeDateValue,
+): date is DateValue => {
+    if (Array.isArray(date)) return false;
+    else return true;
+};
+
+export const getSortedDates = (dates: RangeDateValue): RangeDateValue => {
+    const [firstDate, secondDate] = dates;
+
+    if (!firstDate) return [undefined, secondDate];
+    else if (!secondDate) return [firstDate, undefined];
+
+    return [
+        new Date(Math.min(firstDate.getTime(), secondDate.getTime())),
+        new Date(Math.max(firstDate.getTime(), secondDate.getTime())),
+    ];
 };
