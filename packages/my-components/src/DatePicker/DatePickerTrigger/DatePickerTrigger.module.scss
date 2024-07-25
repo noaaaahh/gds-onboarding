@@ -27,6 +27,8 @@
 .dateField {
     width: 100%;
     position: relative;
+    cursor: pointer;
+    text-align: left;
 
     &__calendarIcon {
         position: absolute;

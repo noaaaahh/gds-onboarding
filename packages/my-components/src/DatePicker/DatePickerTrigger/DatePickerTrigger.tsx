@@ -63,14 +63,14 @@ const TriggerInput = () => {
 
     return (
         <div className={clsx(styles[`dateField`])}>
-            <input
+            <div
                 className={clsx(
                     styles['dateField__input'],
                     styles[`dateField__input--default`],
                 )}
-                value={inputValue}
-                readOnly
-            />
+            >
+                {inputValue}
+            </div>
             <CalendarIcon />
         </div>
     );
