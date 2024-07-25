@@ -28,18 +28,10 @@ export const Default: Story = {
                     onChangeDate={(date) => setDate(date)}
                     locale="ko"
                 >
-                    <DatePicker.Trigger>
-                        <DatePicker.Input
-                            asTrigger
-                            placeholder="기간 선택"
-                            value={date?.toLocaleString('ja')}
-                        />
-                    </DatePicker.Trigger>
+                    <DatePicker.Trigger />
                     <DatePicker.Content>
                         <DatePicker.Header>
                             <DatePicker.Input placeholder="시작일" />
-                            {/* <DatePicker.Input target="from" /> */}
-                            {/* <DatePicker.Input target="to" /> */}
                         </DatePicker.Header>
                         <DatePicker.Calendar
                             minDate={new Date('2024-07.05')}
@@ -73,13 +65,7 @@ export const WithSidebar: Story = {
                     locale="ko"
                     mode="range"
                 >
-                    <DatePicker.Trigger>
-                        <DatePicker.Input
-                            asTrigger
-                            placeholder="기간 선택"
-                            value={date?.toLocaleString('ja')}
-                        />
-                    </DatePicker.Trigger>
+                    <DatePicker.Trigger />
                     <DatePicker.Content>
                         <DatePicker.Header>
                             <DatePicker.Input
