@@ -36,6 +36,10 @@ const DatePickerProvider = <T extends DateValue | RangeDateValue>({
     };
 
     useEffect(() => {
+        if (mode === 'range' && date === undefined) {
+            handleChange([undefined, undefined] as T);
+        }
+
         setDefaultDate(date);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
