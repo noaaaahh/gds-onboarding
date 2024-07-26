@@ -163,9 +163,15 @@ export const WithSidebar: Story = {
                     <span>date 상태: </span>
                     <br />
                     <br />
-                    <span>{date?.[0]?.toLocaleDateString()}</span>
+                    <span>
+                        {`${date?.[0]}`}
+                        {date?.[0]?.toLocaleDateString()}
+                    </span>
                     <span> ~ </span>
-                    <span>{date?.[1]?.toLocaleDateString()}</span>
+                    <span>
+                        {`${date?.[1]}`}
+                        {date?.[1]?.toLocaleDateString()}
+                    </span>
                 </div>
             </div>
         );
