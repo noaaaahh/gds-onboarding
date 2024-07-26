@@ -3,8 +3,6 @@ import React from 'react';
 import NoBody from '../NoBody';
 import DatePickerProvider from './DatePicker.context';
 import DatePickerCalendar from './DatePickerCalendar';
-import DatePickerFooter from './DatePickerFooter';
-import DatePickerHeader from './DatePickerHeader';
 import DatePickerReset from './DatePickerReset';
 import DatePickerTrigger from './DatePickerTrigger';
 import DatePickerInput from './DatePickerInput';
@@ -40,9 +38,7 @@ const DatePicker = <T extends DateValue | RangeDateValue>({
 
 DatePicker.Trigger = DatePickerTrigger;
 DatePicker.Calendar = DatePickerCalendar;
-DatePicker.Header = DatePickerHeader;
 DatePicker.Content = DatePickerContent;
-DatePicker.Footer = DatePickerFooter;
 DatePicker.Reset = DatePickerReset;
 DatePicker.Input = DatePickerInput;
 
