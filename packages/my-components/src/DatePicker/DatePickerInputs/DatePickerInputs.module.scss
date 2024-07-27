@@ -1,5 +1,7 @@
-.input_trigger {
-    cursor: pointer;
+.inputs {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
 }
 
 .DatePickerField {
@@ -18,10 +20,6 @@
         transform: translateY(-50%);
         right: 0.75rem /* 12px -> .75rem */;
         cursor: pointer;
-    }
-
-    & + & {
-        margin-left: 0.5rem /* 8px -> .5rem */;
     }
 
     // reactstrap style
