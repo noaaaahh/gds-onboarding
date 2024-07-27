@@ -7,6 +7,8 @@ export type Mode = 'single' | 'range';
 export type DateValue = Date | undefined;
 export type RangeDateValue = [Date | undefined, Date | undefined];
 
+export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+
 export type InitializeRangeProps = {
     minDate: Date | undefined;
     maxDate: Date | undefined;

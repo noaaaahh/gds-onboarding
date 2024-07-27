@@ -17,9 +17,9 @@ import {
     isValidDate,
 } from '../DatePicker.utils';
 
-import styles from './DatePickerInput.module.scss';
+import styles from './DatePickerInputs.module.scss';
 import IconBase from '../../Icon/IconBase';
-import { RangeDateValue } from '../DatePicker.types';
+import { DateValue, Optional, RangeDateValue } from '../DatePicker.types';
 
 type InputState = 'default' | 'invalid' | 'valid';
 type DatePickerInputProps = ComponentProps<'input'> & {
@@ -132,7 +132,54 @@ const DatePickerInput = ({
     );
 };
 
-export default DatePickerInput;
+type DefaultInputsProps = {
+    placeholder: string;
+    startPlaceholder: string;
+    endPlaceholder: string;
+};
+type SingleInputsProps = Optional<
+    DefaultInputsProps,
+    'endPlaceholder' | 'startPlaceholder'
+>;
+type RangeInputsProps = Optional<DefaultInputsProps, 'placeholder'>;
+type InputsProps<T> = T extends DateValue
+    ? SingleInputsProps
+    : RangeInputsProps;
+
+const DatePickerInputs = (props: InputsProps<typeof date>) => {
+    const { date } = useDatePicker();
+
+    if (isDateValue(date) && (props.startPlaceholder || props.endPlaceholder)) {
+        console.warn(
+            'single 모드일 때는 startPlaceholder 혹은 endPlaceholder를 이용할 수 없습니다.',
+        );
+    }
+
+    if (!isDateValue(date) && props.placeholder) {
+        console.warn('range 모드일 때는 placeholder를 이용할 수 없습니다.');
+    }
+
+    return (
+        <div className={styles.inputs}>
+            {isDateValue(date) ? (
+                <DatePickerInput placeholder={props.placeholder} />
+            ) : (
+                <>
+                    <DatePickerInput
+                        target="start"
+                        placeholder={props.startPlaceholder}
+                    />
+                    <DatePickerInput
+                        target="end"
+                        placeholder={props.endPlaceholder}
+                    />
+                </>
+            )}
+        </div>
+    );
+};
+
+export default DatePickerInputs;
 
 const ErrorCircleIcon = ({ handleClose }: { handleClose: () => void }) => {
     return (
