@@ -7,6 +7,7 @@ import DatePicker, {
     DateValue,
 } from '../../my-components/src/DatePicker';
 import Button from '../../my-components/src/Button';
+import Stack from '../../my-components/src/Stack';
 
 const meta: Meta<typeof DatePicker> = {
     title: 'DatePicker',
@@ -111,11 +112,9 @@ export const WithSidebar: Story = {
                             />
                         </div>
                         <div style={{ display: 'flex' }}>
-                            <div
+                            <Stack
+                                spacing="sm"
                                 style={{
-                                    flex: 1,
-                                    display: 'flex',
-                                    flexDirection: 'column',
                                     width: '150px',
                                     padding: '12px 4px',
                                     borderRight:
@@ -137,7 +136,7 @@ export const WithSidebar: Story = {
                                 >
                                     오늘
                                 </RangeButton>
-                            </div>
+                            </Stack>
                             <DatePicker.Calendar />
                         </div>
                         <div
