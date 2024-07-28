@@ -13,7 +13,7 @@ const meta: Meta<typeof Stack> = {
     argTypes: {
         align: {
             control: { type: 'inline-radio' },
-            options: ['start', 'center', 'end'],
+            options: ['start', 'center', 'end', 'stretch'],
         },
         justify: {
             control: { type: 'inline-radio' },
@@ -41,28 +41,28 @@ export const Default: Story = {
                     <StackItem
                         bgColor="red"
                         label="1"
-                        width={100}
+                        minWidth={100}
                         height={50}
                     />
 
                     <StackItem
                         bgColor="blue"
                         label="2"
-                        width={50}
+                        minWidth={50}
                         height={200}
                     />
 
                     <StackItem
                         bgColor="green"
                         label="3"
-                        width={150}
+                        minWidth={150}
                         height={150}
                     />
 
                     <StackItem
                         bgColor="yellow"
                         label="4"
-                        width={200}
+                        minWidth={200}
                         height={100}
                     />
                 </Stack>
@@ -84,28 +84,28 @@ export const NumberSpacing: Story = {
                     <StackItem
                         bgColor="red"
                         label="1"
-                        width={100}
+                        minWidth={100}
                         height={50}
                     />
 
                     <StackItem
                         bgColor="blue"
                         label="2"
-                        width={50}
+                        minWidth={50}
                         height={200}
                     />
 
                     <StackItem
                         bgColor="green"
                         label="3"
-                        width={150}
+                        minWidth={150}
                         height={150}
                     />
 
                     <StackItem
                         bgColor="yellow"
                         label="4"
-                        width={200}
+                        minWidth={200}
                         height={100}
                     />
                 </Stack>
@@ -117,7 +117,7 @@ export const NumberSpacing: Story = {
 const StackItem = (props: {
     bgColor: string;
     label: string;
-    width: number;
+    minWidth: number;
     height: number;
 }) => {
     return (
