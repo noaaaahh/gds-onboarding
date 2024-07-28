@@ -1,0 +1,11 @@
+:root {
+    --sm: 8px;
+    --md: 16px;
+    --lg: 24px;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
