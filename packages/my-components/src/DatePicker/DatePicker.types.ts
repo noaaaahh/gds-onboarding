@@ -33,3 +33,9 @@ export type DatePickerProviderProps<T> = {
 
 export type DatePickerProps<T> = DatePickerProviderProps<T> &
     ComponentProps<typeof NoBody>;
+
+export type IsDateFormatProps = { y: string; m: string; d: string };
+
+export type CheckRangeProps = {
+    value: string;
+} & InitializeRangeProps;
