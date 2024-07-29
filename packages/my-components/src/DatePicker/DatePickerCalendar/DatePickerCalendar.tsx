@@ -3,10 +3,8 @@ import { LooseValue } from 'react-calendar/dist/cjs/shared/types';
 
 import Calendar from '../../Calendar';
 import { useDatePicker } from '../DatePicker.context';
-import { DateValue, RangeDateValue } from '../DatePicker.types';
 import styles from './DatePickerCalendar.module.scss';
-
-type ModeDate<T> = T extends 'single' ? DateValue : RangeDateValue;
+import { ModeDate } from './DatePickerCalendar.types';
 
 const DatePickerCalendar = ({
     maxDate,
@@ -23,7 +21,7 @@ const DatePickerCalendar = ({
 
     return (
         <Calendar
-            value={date as LooseValue}
+            value={date as LooseValue} // 라이브러리 타입을 변형해서 쓰는 게 위험할 수 있다.
             allowPartialRange
             onChange={(date) => handleChange(date as ModeDate<typeof mode>)}
             locale={locale}

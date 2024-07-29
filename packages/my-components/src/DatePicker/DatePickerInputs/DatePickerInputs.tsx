@@ -1,6 +1,5 @@
 import React, {
     ChangeEvent,
-    ComponentProps,
     FocusEvent,
     KeyboardEvent,
     useEffect,
@@ -19,14 +18,13 @@ import {
 
 import styles from './DatePickerInputs.module.scss';
 import IconBase from '../../Icon/IconBase';
-import { DateValue, Optional, RangeDateValue } from '../DatePicker.types';
-
-type InputState = 'default' | 'invalid' | 'valid';
-type DatePickerInputProps = ComponentProps<'input'> & {
-    target?: 'start' | 'end';
-};
-
-const DATE_REGEX = new RegExp(/^[0-9./]*$/);
+import { RangeDateValue } from '../DatePicker.types';
+import {
+    DatePickerInputProps,
+    DatePickerInputsProps,
+    InputState,
+} from './DatePickerInputs.types';
+import { DATE_REGEX } from './DatePickerInputs.constants';
 
 const DatePickerInput = ({
     target,
@@ -135,21 +133,7 @@ const DatePickerInput = ({
     );
 };
 
-type DefaultInputsProps = {
-    placeholder: string;
-    startPlaceholder: string;
-    endPlaceholder: string;
-};
-type SingleInputsProps = Optional<
-    DefaultInputsProps,
-    'endPlaceholder' | 'startPlaceholder'
->;
-type RangeInputsProps = Optional<DefaultInputsProps, 'placeholder'>;
-type InputsProps<T> = T extends DateValue
-    ? SingleInputsProps
-    : RangeInputsProps;
-
-const DatePickerInputs = (props: InputsProps<typeof date>) => {
+const DatePickerInputs = (props: DatePickerInputsProps<typeof date>) => {
     const { date } = useDatePicker();
 
     if (isDateValue(date) && (props.startPlaceholder || props.endPlaceholder)) {

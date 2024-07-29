@@ -1,10 +1,4 @@
-import React, {
-    ComponentPropsWithoutRef,
-    ElementRef,
-    forwardRef,
-    useEffect,
-    useState,
-} from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 
 import NoBody from '../../NoBody';
@@ -14,10 +8,14 @@ import IconBase from '../../Icon/IconBase';
 import styles from './DatePickerTrigger.module.scss';
 import { useDatePicker } from '../DatePicker.context';
 import { dateFormat, isDateValue } from '../DatePicker.utils';
+import {
+    DatePickerTriggerProps,
+    DatePickerTriggerRef,
+} from './DatePickerTrigger.types';
 
 const DatePickerTrigger = forwardRef<
-    ElementRef<typeof NoBody.Trigger>,
-    ComponentPropsWithoutRef<typeof NoBody.Trigger>
+    DatePickerTriggerRef,
+    DatePickerTriggerProps
 >(({ className, children, ...props }, ref) => {
     return (
         <NoBody.Trigger
