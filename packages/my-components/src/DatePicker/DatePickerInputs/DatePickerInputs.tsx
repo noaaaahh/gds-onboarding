@@ -57,6 +57,8 @@ const DatePickerInput = ({
         handleChange(nextDate);
     };
 
+    // 주석
+    // hooks로 빼내기
     const parseTextToDate = (value: string) => {
         if (value === '') return handleClose();
 
@@ -107,8 +109,8 @@ const DatePickerInput = ({
     return (
         <div
             className={clsx(
-                styles.DatePickerField,
-                styles[`DatePickerField--${inputState}`],
+                styles.datePickerField,
+                // styles[`DatePickerField--${inputState}`],
             )}
         >
             {inputState === 'valid' ? (
@@ -118,8 +120,8 @@ const DatePickerInput = ({
             )}
             <input
                 className={clsx(
-                    styles.DatePickerField__input,
-                    styles[`DatePickerField__input--${inputState}`],
+                    styles.input,
+                    styles[`input_${inputState}`],
                     className,
                 )}
                 value={inputValue || ''}
@@ -189,7 +191,7 @@ const ErrorCircleIcon = ({ handleClose }: { handleClose: () => void }) => {
             height="16"
             viewBox="0 0 16 16"
             color="#858899"
-            className={styles.DatePickerField__cancelIcon}
+            className={styles.cancelIcon}
             xmlns="http://www.w3.org/2000/svg"
             onClick={handleClose}
         >
@@ -208,7 +210,7 @@ const CalendarIcon = () => {
             width="16"
             height="16"
             viewBox="0 0 16 16"
-            className={styles.DatePickerField__calendarIcon}
+            className={styles.calendarIcon}
             xmlns="http://www.w3.org/2000/svg"
         >
             <path
