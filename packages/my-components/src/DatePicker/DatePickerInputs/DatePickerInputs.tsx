@@ -44,6 +44,7 @@ const DatePickerInput = ({
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const currentValue = e.target.value;
         if (!DATE_REGEX.test(currentValue)) return;
+        if (currentValue === '') setInputState('default');
 
         setInputValue(currentValue);
     };
@@ -53,6 +54,7 @@ const DatePickerInput = ({
 
         const nextDate = [...date] satisfies RangeDateValue;
         nextDate[CURRENT_INPUT_INDEX] = undefined;
+        setInputState('default');
         handleChange(nextDate);
     };
 
