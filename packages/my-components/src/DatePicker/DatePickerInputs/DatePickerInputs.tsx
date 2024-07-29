@@ -54,7 +54,6 @@ const DatePickerInput = ({
 
         const nextDate = [...date] satisfies RangeDateValue;
         nextDate[CURRENT_INPUT_INDEX] = undefined;
-        setInputState('default');
         handleChange(nextDate);
     };
 
