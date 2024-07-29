@@ -5,13 +5,13 @@ export type Locale = 'ko' | 'ja' | 'en';
 export type Mode = 'single' | 'range';
 
 export type DateValue = Date | undefined;
-export type RangeDateValue = [Date | undefined, Date | undefined];
+export type RangeDateValue = [DateValue, DateValue];
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 export type InitializeRangeProps = {
-    minDate: Date | undefined;
-    maxDate: Date | undefined;
+    minDate: DateValue;
+    maxDate: DateValue;
 };
 
 export type DatePickerContextType<T extends DateValue | RangeDateValue> = {
