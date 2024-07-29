@@ -22,22 +22,17 @@ type Story = StoryObj<typeof DatePicker>;
 
 export const Default: Story = {
     render: () => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [date, setDate] = useState<DateValue>();
 
         return (
-            <div style={{ width: '500px', height: '1000vh' }}>
+            <div style={{ width: '500px', height: '100dvh' }}>
                 <DatePicker
                     date={date}
                     onChangeDate={(date) => setDate(date)}
                     locale="ko"
                 >
                     <DatePicker.Trigger />
-                    <DatePicker.Content
-                        style={{
-                            backgroundColor: 'white',
-                        }}
-                    >
+                    <DatePicker.Content>
                         <div
                             style={{
                                 padding: '12px 16px 16px',
@@ -75,7 +70,6 @@ export const Default: Story = {
 
 export const WithSidebar: Story = {
     render: () => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [date, setDate] = useState<RangeDateValue>();
         const handleRangeDate = (range: 'month' | 'week' | 'today') => {
             const date = new Date();
@@ -87,7 +81,7 @@ export const WithSidebar: Story = {
         };
 
         return (
-            <div style={{ width: '500px', height: '1000vh' }}>
+            <div style={{ width: '500px', height: '100dvh' }}>
                 <DatePicker
                     date={date}
                     onChangeDate={(date) => setDate(date)}
@@ -95,7 +89,7 @@ export const WithSidebar: Story = {
                     mode="range"
                 >
                     <DatePicker.Trigger />
-                    <DatePicker.Content style={{ backgroundColor: 'white' }}>
+                    <DatePicker.Content>
                         <div
                             style={{
                                 display: 'flex',
@@ -207,64 +201,3 @@ const RangeButton = ({
         </button>
     );
 };
-
-// export const RangeWithSeparatedDate: Story = {
-//     render: () => {
-//         const [startDate, setStartDate] = useState<DateValue>();
-//         const [endDate, setEndDate] = useState<DateValue>();
-//         const handleDate = (date: RangeDateValue) => {
-//             const [start, end] = date;
-
-//             setStartDate(start);
-//             setEndDate(end);
-//         };
-
-//         return (
-//             <div style={{ width: '500px', height: '1000vh' }}>
-//                 <DatePicker
-//                     date={[startDate, endDate]}
-//                     onChangeDate={(date) => handleDate(date)}
-//                     locale="ko"
-//                     mode="range"
-//                 >
-//                     <DatePicker.Trigger />
-//                     <DatePicker.Content
-//                         style={{
-//                             backgroundColor: 'white',
-//                         }}
-//                     >
-//                         <div
-//                             style={{
-//                                 padding: '12px 16px 16px',
-//                                 borderBottom:
-//                                     '0.0625rem solid var(--border-color, rgb(225, 225, 232))',
-//                             }}
-//                         >
-//                             <DatePicker.Input placeholder="시작일" />
-//                         </div>
-//                         <DatePicker.Calendar
-//                             minDate={new Date('2024-07.05')}
-//                             maxDate={new Date('2024-07.24')}
-//                         />
-//                         <div
-//                             style={{
-//                                 display: 'flex',
-//                                 padding: '12px 16px 16px',
-//                                 borderTop:
-//                                     '0.0625rem solid var(--border-color, rgb(225, 225, 232))',
-//                             }}
-//                         >
-//                             <DatePicker.Reset />
-
-//                             <Button variant="link">A</Button>
-//                             <Button variant="primary">B</Button>
-//                         </div>
-//                     </DatePicker.Content>
-//                 </DatePicker>
-
-//                 <div>start date: {startDate?.toString()}</div>
-//                 <div>end date: {endDate?.toString()}</div>
-//             </div>
-//         );
-//     },
-// };
