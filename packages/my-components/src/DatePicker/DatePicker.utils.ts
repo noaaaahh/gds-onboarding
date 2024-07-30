@@ -1,6 +1,7 @@
 import {
+    CheckRangeProps,
     DateValue,
-    InitializeRangeProps,
+    IsDateFormatProps,
     Locale,
     RangeDateValue,
 } from './DatePicker.types';
@@ -25,7 +26,6 @@ export const dateFormat = (date: DateValue, locale: Locale) => {
     return `${m}.${d}.${y}`;
 };
 
-type IsDateFormatProps = { y: string; m: string; d: string };
 export const isDateFormat = ({ y, m, d }: IsDateFormatProps) => {
     const date = new Date(`${y}-${m}-${d}`);
 
@@ -50,9 +50,6 @@ export const isValidDate = (value: string, locale: Locale) => {
     return isDateFormat(getYMD(value, locale));
 };
 
-type CheckRangeProps = {
-    value: string;
-} & InitializeRangeProps;
 export const constrainDateToRange = ({
     value,
     minDate,
@@ -67,6 +64,7 @@ export const constrainDateToRange = ({
 };
 
 export const isDateValue = (
+    // !다른 방법을 고민해보기
     date: DateValue | RangeDateValue,
 ): date is DateValue => {
     if (Array.isArray(date)) return false;
