@@ -2,45 +2,21 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 
 import NoBody from '../../NoBody';
-import { Locale, RangeDateValue } from '../DatePicker.types';
 import IconBase from '../../Icon/IconBase';
 
-import styles from './DatePickerTrigger.module.scss';
 import { useDatePicker } from '../DatePicker.context';
 import { dateFormat, isDateValue } from '../DatePicker.utils';
 import {
     DatePickerTriggerProps,
     DatePickerTriggerRef,
 } from './DatePickerTrigger.types';
+import { getInputText } from './DatePickerTrigger.utils';
+import styles from './DatePickerTrigger.module.scss';
 
 const DatePickerTrigger = forwardRef<
     DatePickerTriggerRef,
     DatePickerTriggerProps
 >(({ className, children, ...props }, ref) => {
-    return (
-        <NoBody.Trigger
-            ref={ref}
-            className={clsx(styles.trigger, className)}
-            {...props}
-        >
-            {children || <TriggerInput />}
-        </NoBody.Trigger>
-    );
-});
-DatePickerTrigger.displayName = 'DatePickerTrigger';
-
-export default DatePickerTrigger;
-
-const getInputText = (date: RangeDateValue, locale: Locale) => {
-    const [start, end] = date;
-    const startValue = dateFormat(start, locale);
-    const endValue = dateFormat(end, locale);
-
-    if (startValue && endValue) return `${startValue} - ${endValue}`;
-    else return `${startValue || endValue}`;
-};
-
-const TriggerInput = () => {
     const { date, locale } = useDatePicker();
 
     const [inputValue, setInputValue] = useState(() => {
@@ -59,20 +35,35 @@ const TriggerInput = () => {
         setInputValue(getInputText(date, locale));
     }, [date, locale]);
 
-    return (
-        <div className={clsx(styles[`dateField`])}>
-            <div
-                className={clsx(
-                    styles['dateField__input'],
-                    styles[`dateField__input--default`],
-                )}
-            >
-                {inputValue}
-            </div>
+    const customTrigger = (
+        <div className={clsx(styles.dateField)}>
+            {inputValue || (
+                <span className={styles['dateField_placeholder']}>
+                    {/* NOTE: customTrigger는 asChild가 false일 때만 화면에 나타나므로 children은 항상 placeholder로 사용한다. */}
+                    {children}
+                </span>
+            )}
             <CalendarIcon />
         </div>
     );
-};
+
+    return (
+        <NoBody.Trigger
+            ref={ref}
+            className={clsx(
+                styles.trigger,
+                !props.asChild && styles['trigger_default'],
+                className,
+            )}
+            {...props}
+        >
+            {props.asChild ? children : customTrigger}
+        </NoBody.Trigger>
+    );
+});
+DatePickerTrigger.displayName = 'DatePickerTrigger';
+
+export default DatePickerTrigger;
 
 const CalendarIcon = () => {
     return (
@@ -80,7 +71,7 @@ const CalendarIcon = () => {
             width="16"
             height="16"
             viewBox="0 0 16 16"
-            className={styles['dateField__calendarIcon']}
+            className={styles.calendarIcon}
             xmlns="http://www.w3.org/2000/svg"
         >
             <path
