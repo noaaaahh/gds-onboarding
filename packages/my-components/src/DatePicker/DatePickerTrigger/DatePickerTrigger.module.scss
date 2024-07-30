@@ -1,26 +1,20 @@
 .trigger {
-    width: 100%;
-    padding: 0;
-    margin: 0;
+    display: block;
 
-    background-color: transparent;
-    border: 0.0625rem solid var(--border-color, rgb(225, 225, 232));
-    border-radius: 8px;
-    outline: 0;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    &_default {
+        width: 100%;
+        padding: 0;
+        margin: 0;
 
-    &:has(.dateField__input) {
-        &:hover {
-            border-color: var(--semantic-color-border-border-hover, #cdced6);
-            outline: 0;
-        }
+        background-color: transparent;
+        border: transparent;
+        outline: 0;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
 
-        &:focus-visible {
-            border-radius: 0.5rem;
-
-            border: 1px solid var(--primary, rgb(80, 148, 250));
-            outline: 0;
-        }
+    &:has(.dateField__input):focus-visible .dateField__input {
+        border-color: var(--primary, rgb(80, 148, 250));
+        outline: 0;
     }
 }
 
@@ -30,33 +24,35 @@
     cursor: pointer;
     text-align: left;
 
-    &__calendarIcon {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 0.75rem /* 12px -> .75rem */;
+    box-sizing: border-box;
+    display: block;
+    border: 0.0625rem solid var(--border-color, rgb(225, 225, 232));
+    border-radius: 8px;
+    width: 100%;
+    height: 2rem;
+    padding: 0.3125rem /* 5px -> .3125rem */ 2.25rem /* 12px -> .75rem */
+        0.3125rem /* 5px -> .3125rem */ 0.75rem /* 36px -> 2.25rem */;
+
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.375rem;
+    color: var(--text-normal, rgb(43, 45, 54));
+    background-color: var(--background-normal, rgb(255, 255, 255));
+    background-clip: padding-box;
+
+    &:hover {
+        border-color: var(--semantic-color-border-border-hover, #cdced6);
+        outline: 0;
     }
 
-    &__input {
-        box-sizing: border-box;
-        display: block;
-        border: none;
-        border-radius: 8px;
-        width: 100%;
-        height: 2rem;
-        padding: 0.3125rem /* 5px -> .3125rem */ 0.75rem /* 12px -> .75rem */
-            0.3125rem /* 5px -> .3125rem */ 2.25rem /* 36px -> 2.25rem */;
-
-        font-size: 0.875rem;
-        font-weight: 400;
-        line-height: 1.375rem;
-        color: var(--text-normal, rgb(43, 45, 54));
-        background-color: var(--background-normal, rgb(255, 255, 255));
-        background-clip: padding-box;
-
-        &:focus {
-            border: none;
-            outline: none;
-        }
+    &_placeholder {
+        color: #757575;
     }
+}
+
+.calendarIcon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.75rem /* 12px -> .75rem */;
 }
