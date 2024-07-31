@@ -1,7 +1,19 @@
-import { Locale, RangeDateValue } from '../DatePicker.types';
-import { dateFormat } from '../DatePicker.utils';
+import { DateValue, Locale, RangeDateValue } from '../DatePicker.types';
+import { dateFormat, isDateValue } from '../DatePicker.utils';
 
-export const getInputText = (date: RangeDateValue, locale: Locale) => {
+export const getInputText = (
+    date: DateValue | RangeDateValue,
+    locale: Locale,
+) => {
+    if (isDateValue(date)) return getSingleInputText(date, locale);
+    else return getRangeInputText(date, locale);
+};
+
+const getSingleInputText = (date: DateValue, locale: Locale) => {
+    return dateFormat(date, locale);
+};
+
+const getRangeInputText = (date: RangeDateValue, locale: Locale) => {
     const [start, end] = date;
     const startValue = dateFormat(start, locale);
     const endValue = dateFormat(end, locale);

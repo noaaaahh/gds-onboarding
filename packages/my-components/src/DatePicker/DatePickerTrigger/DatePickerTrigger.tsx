@@ -1,39 +1,23 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { clsx } from 'clsx';
 
 import NoBody from '../../NoBody';
 import IconBase from '../../Icon/IconBase';
 
 import { useDatePicker } from '../DatePicker.context';
-import { dateFormat, isDateValue } from '../DatePicker.utils';
+import styles from './DatePickerTrigger.module.scss';
+import { useTriggerInput } from './DatePickerTrigger.hooks';
 import {
     DatePickerTriggerProps,
     DatePickerTriggerRef,
 } from './DatePickerTrigger.types';
-import { getInputText } from './DatePickerTrigger.utils';
-import styles from './DatePickerTrigger.module.scss';
 
 const DatePickerTrigger = forwardRef<
     DatePickerTriggerRef,
     DatePickerTriggerProps
 >(({ className, children, ...props }, ref) => {
     const { date, locale } = useDatePicker();
-
-    const [inputValue, setInputValue] = useState(() => {
-        if (isDateValue(date)) return dateFormat(date, locale);
-
-        return getInputText(date, locale);
-    });
-
-    useEffect(() => {
-        if (isDateValue(date)) {
-            const nextValue = dateFormat(date, locale);
-            setInputValue(nextValue);
-            return;
-        }
-
-        setInputValue(getInputText(date, locale));
-    }, [date, locale]);
+    const inputValue = useTriggerInput(date, locale);
 
     const customTrigger = (
         <div className={clsx(styles.dateField)}>
