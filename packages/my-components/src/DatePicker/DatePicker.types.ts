@@ -1,20 +1,22 @@
 import { ComponentProps, ReactNode } from 'react';
 import NoBody from '../NoBody';
+import { Range } from 'react-calendar/dist/cjs/shared/types';
 
 export type Locale = 'ko' | 'ja' | 'en';
 export type Mode = 'single' | 'range';
 
-export type DateValue = Date | undefined;
-export type RangeDateValue = [Date | undefined, Date | undefined];
+export type DateValue = Date | null;
+export type RangeDateValue = Range<DateValue>;
+export type DateType = DateValue | RangeDateValue;
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 export type InitializeRangeProps = {
-    minDate: Date | undefined;
-    maxDate: Date | undefined;
+    minDate: DateValue;
+    maxDate: DateValue;
 };
 
-export type DatePickerContextType<T extends DateValue | RangeDateValue> = {
+export type DatePickerContextType<T extends DateType> = {
     date: T;
     defaultDate: T;
     handleChange: (date: T) => void;
@@ -26,10 +28,16 @@ export type DatePickerContextType<T extends DateValue | RangeDateValue> = {
 export type DatePickerProviderProps<T> = {
     mode?: Mode;
     locale?: Locale;
-    date: T;
-    onChangeDate: (date: T) => void;
+    date?: T;
+    onChangeDate?: (date: T) => void;
     children: ReactNode;
 };
 
 export type DatePickerProps<T> = DatePickerProviderProps<T> &
     ComponentProps<typeof NoBody>;
+
+export type IsDateFormatProps = { y: string; m: string; d: string };
+
+export type CheckRangeProps = {
+    value: string;
+} & InitializeRangeProps;
