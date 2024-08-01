@@ -3,16 +3,16 @@ import React, { useContext, useState, createContext, useEffect } from 'react';
 import {
     DatePickerContextType,
     DatePickerProviderProps,
-    DateValue,
+    DateType,
     InitializeRangeProps,
-    RangeDateValue,
 } from './DatePicker.types';
 import once from 'lodash.once';
 
-const createDatePickerContext = once(<T extends DateValue | RangeDateValue>() =>
+const createDatePickerContext = once(<T extends DateType>() =>
     createContext<DatePickerContextType<T>>({} as DatePickerContextType<T>),
 );
-const DatePickerProvider = <T extends DateValue | RangeDateValue>({
+
+const DatePickerProvider = <T extends DateType>({
     date,
     onChangeDate,
     mode,
@@ -20,13 +20,15 @@ const DatePickerProvider = <T extends DateValue | RangeDateValue>({
     children,
 }: DatePickerProviderProps<T>) => {
     const DatePickerContext = createDatePickerContext<T>();
-    const [defaultDate, setDefaultDate] = useState<T>(date);
+    const [innerDate, setInnerDate] = useState<T>(date as T);
+    const [defaultDate, setDefaultDate] = useState<T>(date as T);
     const [range, setRange] = useState<InitializeRangeProps>({
         minDate: new Date('1970.01.01'),
         maxDate: new Date('2999.12.31'),
     });
 
     const handleChange = (nextDate: T) => {
+        setInnerDate(nextDate);
         onChangeDate?.(nextDate);
     };
 
@@ -37,13 +39,14 @@ const DatePickerProvider = <T extends DateValue | RangeDateValue>({
 
     useEffect(() => {
         if (mode === 'range' && date === undefined) {
-            handleChange([undefined, undefined] as T);
-            setDefaultDate([undefined, undefined] as T);
+            handleChange([null, null] as T);
+            setDefaultDate([null, null] as T);
 
             return;
         }
 
-        setDefaultDate(date);
+        setInnerDate(date as T);
+        setDefaultDate(date as T);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -51,7 +54,7 @@ const DatePickerProvider = <T extends DateValue | RangeDateValue>({
         <DatePickerContext.Provider
             value={{
                 ...range,
-                date,
+                date: innerDate,
                 defaultDate,
                 initializeRange,
                 handleChange,

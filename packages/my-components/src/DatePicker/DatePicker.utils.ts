@@ -74,8 +74,8 @@ export const isDateValue = (
 export const getSortedDates = (dates: RangeDateValue): RangeDateValue => {
     const [firstDate, secondDate] = dates;
 
-    if (!firstDate) return [undefined, secondDate];
-    else if (!secondDate) return [firstDate, undefined];
+    if (!firstDate) return [null, secondDate];
+    else if (!secondDate) return [firstDate, null];
 
     return [
         new Date(Math.min(firstDate.getTime(), secondDate.getTime())),

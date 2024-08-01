@@ -8,9 +8,9 @@ import DatePickerTrigger from './DatePickerTrigger';
 import DatePickerContent from './DatePickerContent';
 import DatePickerInput from './DatePickerInput';
 
-import { DatePickerProps, DateValue, RangeDateValue } from './DatePicker.types';
+import { DatePickerProps, DateType } from './DatePicker.types';
 
-const DatePicker = <T extends DateValue | RangeDateValue>({
+const DatePicker = <T extends DateType>({
     // NoBody props
     open,
     onOpenChange,
@@ -29,7 +29,7 @@ const DatePicker = <T extends DateValue | RangeDateValue>({
             defaultOpen={defaultOpen}
             modal={modal}
         >
-            <DatePickerProvider<typeof date> date={date} {...props}>
+            <DatePickerProvider<T> date={date as T} {...props}>
                 {children}
             </DatePickerProvider>
         </NoBody>
