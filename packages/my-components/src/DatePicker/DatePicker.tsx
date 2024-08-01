@@ -5,8 +5,8 @@ import DatePickerProvider from './DatePicker.context';
 import DatePickerCalendar from './DatePickerCalendar';
 import DatePickerReset from './DatePickerReset';
 import DatePickerTrigger from './DatePickerTrigger';
-import DatePickerInputs from './DatePickerInputs';
 import DatePickerContent from './DatePickerContent';
+import DatePickerInput from './DatePickerInput';
 
 import { DatePickerProps, DateValue, RangeDateValue } from './DatePicker.types';
 
@@ -40,6 +40,6 @@ DatePicker.Trigger = DatePickerTrigger;
 DatePicker.Calendar = DatePickerCalendar;
 DatePicker.Content = DatePickerContent;
 DatePicker.Reset = DatePickerReset;
-DatePicker.Inputs = DatePickerInputs;
+DatePicker.Input = DatePickerInput;
 
 export default DatePicker;
