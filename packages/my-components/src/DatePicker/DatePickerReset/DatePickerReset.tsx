@@ -19,7 +19,7 @@ const DatePickerReset = ({
     const customReset = (
         <>
             <RefreshIcon />
-            초기화
+            {children || '초기화'}
         </>
     );
 
