@@ -1,5 +1,6 @@
 import {
     CheckRangeProps,
+    DateType,
     DateValue,
     IsDateFormatProps,
     Locale,
@@ -16,6 +17,7 @@ export const dateFormat = (date: DateValue, locale: Locale) => {
     if (!date) {
         return '';
     }
+
     const formatDate = date;
 
     const y = formatDate.getFullYear();
@@ -65,20 +67,21 @@ export const constrainDateToRange = ({
 
 export const isDateValue = (
     // !다른 방법을 고민해보기
-    date: DateValue | RangeDateValue,
+    date: DateType,
 ): date is DateValue => {
-    if (Array.isArray(date)) return false;
+    if (!date) return true;
+    if ('from' in date && 'to' in date) return false;
     else return true;
 };
 
 export const getSortedDates = (dates: RangeDateValue): RangeDateValue => {
-    const [firstDate, secondDate] = dates;
+    const { from, to } = dates;
 
-    if (!firstDate) return [null, secondDate];
-    else if (!secondDate) return [firstDate, null];
+    if (!from) return { from: null, to };
+    else if (!to) return { from, to: null };
 
-    return [
-        new Date(Math.min(firstDate.getTime(), secondDate.getTime())),
-        new Date(Math.max(firstDate.getTime(), secondDate.getTime())),
-    ];
+    return {
+        from: new Date(Math.min(from.getTime(), to.getTime())),
+        to: new Date(Math.max(from.getTime(), to.getTime())),
+    };
 };

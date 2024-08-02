@@ -1,12 +1,14 @@
 import { ComponentProps, ReactNode } from 'react';
 import NoBody from '../NoBody';
-import { Range } from 'react-calendar/dist/cjs/shared/types';
 
 export type Locale = 'ko' | 'ja' | 'en';
 export type Mode = 'single' | 'range';
 
 export type DateValue = Date | null;
-export type RangeDateValue = Range<DateValue>;
+export type RangeDateValue = {
+    from: DateValue;
+    to: DateValue;
+};
 export type DateType = DateValue | RangeDateValue;
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
