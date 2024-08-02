@@ -5,49 +5,37 @@ import {
     useEffect,
     useState,
 } from 'react';
-import {
-    constrainDateToRange,
-    dateFormat,
-    getSortedDates,
-    isDateValue,
-    isValidDate,
-} from '../DatePicker.utils';
-import { RangeDateValue } from '../DatePicker.types';
+import { dateFormat, getSortedDates, isDateValue } from '../DatePicker.utils';
 import { useDatePicker } from '../DatePicker.context';
 import { DATE_REGEX } from './DatePickerInput.constants';
 import { DateInput, InputType } from './DatePickerInput.types';
+import {
+    getUpdatedDate,
+    updateInputDate,
+    constrainDateToRange,
+    isValidDate,
+} from './DatePickerInput.utils';
 
-const getInputIndex = (target: InputType | undefined) =>
-    target === 'start' ? 0 : 1;
-
-export const useDateInput = (target: InputType | undefined) => {
-    const CURRENT_INPUT_INDEX = getInputIndex(target);
-    const { date, handleChange, minDate, maxDate, locale, mode } =
-        useDatePicker();
-    const [dateInput, setDateInput] = useState<DateInput>(() => {
-        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
-
-        return {
-            state: 'default',
-            value: dateFormat(targetDate, locale) || '',
-        };
+const useDateInput = (target: InputType) => {
+    const { date, handleChange, minDate, maxDate, locale } = useDatePicker();
+    const [dateInput, setDateInput] = useState<DateInput>({
+        state: 'default',
+        value: dateFormat(getUpdatedDate(date, target), locale) || '',
     });
 
     const handleClose = () => {
-        if (isDateValue(date)) return handleChange(undefined);
+        const nextDate = updateInputDate({ date, nextDate: null, target });
 
-        const nextDate = [...date] satisfies RangeDateValue;
-        nextDate[CURRENT_INPUT_INDEX] = undefined;
         handleChange(nextDate);
     };
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const currentValue = e.target.value;
-        if (!DATE_REGEX.test(currentValue)) return;
-        if (currentValue === '')
-            setDateInput((p) => ({ ...p, state: 'default' }));
+        const value = e.target.value;
 
-        setDateInput((p) => ({ ...p, value: currentValue }));
+        if (!DATE_REGEX.test(value)) return;
+        if (value === '') setDateInput((p) => ({ ...p, state: 'default' }));
+
+        setDateInput((p) => ({ ...p, value }));
     };
 
     const onBlur = (e: FocusEvent<HTMLInputElement>) => {
@@ -62,51 +50,55 @@ export const useDateInput = (target: InputType | undefined) => {
         parseTextToDate(value);
     };
 
-    // 주석
-    // hooks로 빼내기
+    // NOTE: input의 value를 Date 형식으로 변환합니다.
     const parseTextToDate = (value: string) => {
         if (value === '') return handleClose();
 
         const isValid = isValidDate(value, locale);
         if (!isValid) return setDateInput((p) => ({ ...p, state: 'invalid' }));
 
-        const nextDate = constrainDateToRange({ value, minDate, maxDate });
-        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
+        // 1. 다음 날짜를 범위 내로 조정
+        const contrainedDate = constrainDateToRange({
+            value,
+            minDate,
+            maxDate,
+        });
+        // 2. 기존 날짜를 다음 날짜로 변경
+        const nextDate = updateInputDate({
+            date,
+            nextDate: contrainedDate,
+            target,
+        });
+        // Range 모드일 시 시작 날짜와 종료 날짜를 순서에 맞게 조정
+        const sortedNextDate = isDateValue(nextDate)
+            ? nextDate
+            : getSortedDates(nextDate);
 
-        if (targetDate === nextDate) {
-            const nextInputValue = dateFormat(nextDate, locale);
-            setDateInput((p) => ({ ...p, value: nextInputValue }));
-        }
+        handleChange(sortedNextDate);
 
-        if (isDateValue(date)) {
-            handleChange(nextDate);
-        } else {
-            const copiedDate = [...date] satisfies RangeDateValue;
-            copiedDate[CURRENT_INPUT_INDEX] = nextDate;
-
-            const sortedNextDate = getSortedDates(copiedDate);
-            handleChange(sortedNextDate);
-        }
-
-        setDateInput((p) => ({ ...p, state: 'valid' }));
+        setDateInput({
+            state: 'valid',
+            value: dateFormat(contrainedDate, locale),
+        });
     };
 
     useEffect(() => {
-        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
+        const targetDate = getUpdatedDate(date, target);
         const nextValue = dateFormat(targetDate, locale);
 
         setDateInput({
             value: nextValue,
             state: nextValue ? 'valid' : 'default',
         });
-    }, [CURRENT_INPUT_INDEX, date, locale]);
+    }, [date, locale, target]);
 
     return {
         dateInput,
-        mode,
         handleClose,
         onChange,
         onBlur,
         onKeyDown: onPressEnter,
     };
 };
+
+export default useDateInput;

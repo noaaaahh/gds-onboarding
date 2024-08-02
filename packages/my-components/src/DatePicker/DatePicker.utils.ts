@@ -1,7 +1,6 @@
 import {
-    CheckRangeProps,
+    DateType,
     DateValue,
-    IsDateFormatProps,
     Locale,
     RangeDateValue,
 } from './DatePicker.types';
@@ -16,6 +15,7 @@ export const dateFormat = (date: DateValue, locale: Locale) => {
     if (!date) {
         return '';
     }
+
     const formatDate = date;
 
     const y = formatDate.getFullYear();
@@ -26,59 +26,23 @@ export const dateFormat = (date: DateValue, locale: Locale) => {
     return `${m}.${d}.${y}`;
 };
 
-export const isDateFormat = ({ y, m, d }: IsDateFormatProps) => {
-    const date = new Date(`${y}-${m}-${d}`);
-
-    if (!date.getTime()) return false;
-    else return true;
-};
-
-export const getYMD = (value: string, locale: Locale) => {
-    const dates = value.replace(/[./]/g, ' ').split(' ');
-    let y, m, d;
-
-    if (locale === 'ko') {
-        [y, m, d] = dates;
-    } else {
-        [m, d, y] = dates;
-    }
-
-    return { y, m, d };
-};
-
-export const isValidDate = (value: string, locale: Locale) => {
-    return isDateFormat(getYMD(value, locale));
-};
-
-export const constrainDateToRange = ({
-    value,
-    minDate,
-    maxDate,
-}: CheckRangeProps) => {
-    const date = new Date(value);
-
-    if (minDate && date < minDate) return minDate;
-    if (maxDate && date > maxDate) return maxDate;
-
-    return date;
-};
-
 export const isDateValue = (
     // !다른 방법을 고민해보기
-    date: DateValue | RangeDateValue,
+    date: DateType,
 ): date is DateValue => {
-    if (Array.isArray(date)) return false;
+    if (!date) return true;
+    if ('from' in date && 'to' in date) return false;
     else return true;
 };
 
 export const getSortedDates = (dates: RangeDateValue): RangeDateValue => {
-    const [firstDate, secondDate] = dates;
+    const { from, to } = dates;
 
-    if (!firstDate) return [null, secondDate];
-    else if (!secondDate) return [firstDate, null];
+    if (!from) return { from: null, to };
+    else if (!to) return { from, to: null };
 
-    return [
-        new Date(Math.min(firstDate.getTime(), secondDate.getTime())),
-        new Date(Math.max(firstDate.getTime(), secondDate.getTime())),
-    ];
+    return {
+        from: new Date(Math.min(from.getTime(), to.getTime())),
+        to: new Date(Math.max(from.getTime(), to.getTime())),
+    };
 };

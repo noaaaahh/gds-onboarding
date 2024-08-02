@@ -39,8 +39,9 @@ const DatePickerProvider = <T extends DateType>({
 
     useEffect(() => {
         if (mode === 'range' && date === undefined) {
-            handleChange([null, null] as T);
-            setDefaultDate([null, null] as T);
+            const initialDate = { from: null, to: null };
+            handleChange(initialDate as T);
+            setDefaultDate(initialDate as T);
 
             return;
         }

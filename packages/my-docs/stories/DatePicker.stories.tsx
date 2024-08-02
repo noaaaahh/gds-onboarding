@@ -2,7 +2,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React, { ReactNode, useState } from 'react';
 
-import DatePicker, { DateType } from '../../my-components/src/DatePicker';
+import DatePicker, { RangeDateValue } from '../../my-components/src/DatePicker';
 import Button from '../../my-components/src/Button';
 import Stack from '../../my-components/src/Stack';
 
@@ -19,8 +19,6 @@ type Story = StoryObj<typeof DatePicker>;
 
 export const Default: Story = {
     render: () => {
-        // const [date, setDate] = useState<DateType>();
-
         return (
             <div style={{ width: '500px', height: '100dvh' }}>
                 <DatePicker locale="ko">
@@ -33,7 +31,10 @@ export const Default: Story = {
                                     '0.0625rem solid var(--border-color, rgb(225, 225, 232))',
                             }}
                         >
-                            <DatePicker.Input placeholder="날짜를 선택해주세요." />
+                            <DatePicker.Input
+                                target="single"
+                                placeholder="날짜를 선택해주세요."
+                            />
                         </div>
                         <DatePicker.Calendar
                             minDate={new Date('2024-07.05')}
@@ -61,14 +62,14 @@ export const Default: Story = {
 
 export const WithSidebar: Story = {
     render: () => {
-        const [date, setDate] = useState<DateType>();
+        const [date, setDate] = useState<RangeDateValue>();
         const handleRangeDate = (range: 'month' | 'week' | 'today') => {
             const date = new Date();
 
             if (range === 'month') date.setMonth(date.getMonth() - 1);
             else if (range === 'week') date.setDate(date.getDate() - 7);
 
-            setDate([date, new Date()]);
+            setDate({ from: date, to: new Date() });
         };
 
         return (
@@ -91,8 +92,8 @@ export const WithSidebar: Story = {
                                     '0.0625rem solid var(--border-color, rgb(225, 225, 232))',
                             }}
                         >
-                            <DatePicker.Input target="start" />
-                            <DatePicker.Input target="end" />
+                            <DatePicker.Input target="from" />
+                            <DatePicker.Input target="to" />
                         </div>
                         <div style={{ display: 'flex' }}>
                             <Stack
@@ -142,9 +143,8 @@ export const WithSidebar: Story = {
                     <span>date 상태: </span>
                     <br />
                     <br />
-                    {Array.isArray(date)
-                        ? `${date[0]?.toLocaleDateString()} ~ ${date[1]?.toLocaleDateString()}`
-                        : date?.toString()}
+                    {date?.from?.toLocaleDateString()} ~{' '}
+                    {date?.to?.toLocaleDateString()}
                 </div>
             </div>
         );
@@ -184,6 +184,3 @@ const RangeButton = ({
         </button>
     );
 };
-
-// range button, reset button 통일
-// 아예 사용자가 관리하거나, 아니면 형태 없이 기능만 관리하거나
