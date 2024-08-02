@@ -1,9 +1,9 @@
 import { ComponentProps } from 'react';
 
 export type InputState = 'default' | 'invalid' | 'valid';
-export type InputType = 'start' | 'end';
+export type InputType = 'from' | 'to' | 'single';
 
-export type SingleProps = ComponentProps<'input'> & { target?: never };
+export type SingleProps = ComponentProps<'input'> & { target: never };
 export type RangeProps = ComponentProps<'input'> & {
     target: InputType;
 };

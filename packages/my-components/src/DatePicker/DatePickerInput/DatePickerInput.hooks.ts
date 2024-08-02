@@ -8,7 +8,6 @@ import {
 import {
     constrainDateToRange,
     dateFormat,
-    getSortedDates,
     isDateValue,
     isValidDate,
 } from '../DatePicker.utils';
@@ -16,16 +15,13 @@ import { RangeDateValue } from '../DatePicker.types';
 import { useDatePicker } from '../DatePicker.context';
 import { DATE_REGEX } from './DatePickerInput.constants';
 import { DateInput, InputType } from './DatePickerInput.types';
+import { getTargetDate, getNextDate } from './DatePickerInput.utils';
 
-const getInputIndex = (target: InputType | undefined) =>
-    target === 'start' ? 0 : 1;
-
-export const useDateInput = (target: InputType | undefined) => {
-    const CURRENT_INPUT_INDEX = getInputIndex(target);
+export const useDateInput = (target: InputType) => {
     const { date, handleChange, minDate, maxDate, locale, mode } =
         useDatePicker();
     const [dateInput, setDateInput] = useState<DateInput>(() => {
-        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
+        const targetDate = getTargetDate(date, target);
 
         return {
             state: 'default',
@@ -34,20 +30,20 @@ export const useDateInput = (target: InputType | undefined) => {
     });
 
     const handleClose = () => {
-        if (isDateValue(date)) return handleChange(undefined);
+        if (isDateValue(date) || target === 'single') return handleChange(null);
 
-        const nextDate = [...date] satisfies RangeDateValue;
-        nextDate[CURRENT_INPUT_INDEX] = undefined;
+        const nextDate = { ...date } satisfies RangeDateValue;
+        nextDate[target] = null;
         handleChange(nextDate);
     };
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const currentValue = e.target.value;
-        if (!DATE_REGEX.test(currentValue)) return;
-        if (currentValue === '')
-            setDateInput((p) => ({ ...p, state: 'default' }));
+        const value = e.target.value;
 
-        setDateInput((p) => ({ ...p, value: currentValue }));
+        if (!DATE_REGEX.test(value)) return;
+        if (value === '') setDateInput((p) => ({ ...p, state: 'default' }));
+
+        setDateInput((p) => ({ ...p, value }));
     };
 
     const onBlur = (e: FocusEvent<HTMLInputElement>) => {
@@ -70,36 +66,33 @@ export const useDateInput = (target: InputType | undefined) => {
         const isValid = isValidDate(value, locale);
         if (!isValid) return setDateInput((p) => ({ ...p, state: 'invalid' }));
 
-        const nextDate = constrainDateToRange({ value, minDate, maxDate });
-        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
+        const contrainedDate = constrainDateToRange({
+            value,
+            minDate,
+            maxDate,
+        });
+        const targetDate = getTargetDate(date, target);
+        const nextDate = getNextDate(date, contrainedDate, target);
+        handleChange(nextDate);
 
-        if (targetDate === nextDate) {
-            const nextInputValue = dateFormat(nextDate, locale);
-            setDateInput((p) => ({ ...p, value: nextInputValue }));
-        }
-
-        if (isDateValue(date)) {
-            handleChange(nextDate);
-        } else {
-            const copiedDate = [...date] satisfies RangeDateValue;
-            copiedDate[CURRENT_INPUT_INDEX] = nextDate;
-
-            const sortedNextDate = getSortedDates(copiedDate);
-            handleChange(sortedNextDate);
-        }
-
-        setDateInput((p) => ({ ...p, state: 'valid' }));
+        setDateInput((p) => ({
+            state: 'valid',
+            value:
+                targetDate === contrainedDate
+                    ? dateFormat(contrainedDate, locale)
+                    : p.value,
+        }));
     };
 
     useEffect(() => {
-        const targetDate = isDateValue(date) ? date : date[CURRENT_INPUT_INDEX];
+        const targetDate = getTargetDate(date, target);
         const nextValue = dateFormat(targetDate, locale);
 
         setDateInput({
             value: nextValue,
             state: nextValue ? 'valid' : 'default',
         });
-    }, [CURRENT_INPUT_INDEX, date, locale]);
+    }, [date, locale, target]);
 
     return {
         dateInput,
