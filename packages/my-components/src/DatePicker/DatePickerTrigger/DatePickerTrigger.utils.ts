@@ -14,9 +14,9 @@ const getSingleInputText = (date: DateValue, locale: Locale) => {
 };
 
 const getRangeInputText = (date: RangeDateValue, locale: Locale) => {
-    const [start, end] = date;
-    const startValue = dateFormat(start, locale);
-    const endValue = dateFormat(end, locale);
+    const { from, to } = date;
+    const startValue = dateFormat(from, locale);
+    const endValue = dateFormat(to, locale);
 
     if (startValue && endValue) return `${startValue} - ${endValue}`;
     else return `${startValue || endValue}`;
