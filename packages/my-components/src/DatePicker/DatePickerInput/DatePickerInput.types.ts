@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react';
+import { DateType, DateValue, InitializeRangeProps } from '../DatePicker.types';
 
 export type InputState = 'default' | 'invalid' | 'valid';
 export type InputType = 'from' | 'to' | 'single';
@@ -15,14 +16,14 @@ export type DateInput = {
     state: InputState;
 };
 
-type SingleInputsProps = {
-    type: 'single';
-    placeholder: string;
-};
-type RangeInputsProps = {
-    type: 'range';
-    startPlaceholder: string;
-    endPlaceholder: string;
-};
+export type ConstrainDateToRangeProps = {
+    value: string;
+} & InitializeRangeProps;
 
-export type DatePickerInputsProps = SingleInputsProps | RangeInputsProps;
+export type IsDateFormatProps = { y: string; m: string; d: string };
+
+export type UpdateInputDate = {
+    date: DateType;
+    nextDate: DateValue;
+    target: InputType;
+};

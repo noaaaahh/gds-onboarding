@@ -2,7 +2,7 @@ import { LooseValue } from 'react-calendar/dist/cjs/shared/types';
 import { DateType } from '../DatePicker.types';
 import { getSortedDates, isDateValue } from '../DatePicker.utils';
 
-export const getNextDate = (date: DateType, currentDate: Date) => {
+export const updateCalendarDate = (date: DateType, currentDate: Date) => {
     if (isDateValue(date)) return currentDate;
 
     const { from, to } = date;

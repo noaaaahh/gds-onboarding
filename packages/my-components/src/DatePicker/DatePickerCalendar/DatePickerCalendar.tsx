@@ -2,8 +2,11 @@ import React, { ComponentProps, useEffect } from 'react';
 
 import Calendar from '../../Calendar';
 import { useDatePicker } from '../DatePicker.context';
-import { getCalendarValue, getNextDate } from './DatePickerCalendar.utils';
 import styles from './DatePickerCalendar.module.scss';
+import {
+    getCalendarValue,
+    updateCalendarDate,
+} from './DatePickerCalendar.utils';
 
 const DatePickerCalendar = ({
     maxDate,
@@ -13,9 +16,9 @@ const DatePickerCalendar = ({
     const { date, handleChange, locale, initializeRange } = useDatePicker();
 
     const handleClickDay = (selectedDate: Date) => {
-        const nextDate = getNextDate(date, selectedDate);
+        const updatedDate = updateCalendarDate(date, selectedDate);
 
-        handleChange(nextDate);
+        handleChange(updatedDate);
     };
 
     useEffect(() => {

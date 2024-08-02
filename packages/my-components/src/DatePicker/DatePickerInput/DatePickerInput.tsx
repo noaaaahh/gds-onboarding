@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import IconBase from '../../Icon/IconBase';
 
 import styles from './DatePickerInput.module.scss';
-import { useDateInput } from './DatePickerInput.hooks';
+import useDateInput from './DatePickerInput.hooks';
 import { DatePickerInputProps } from './DatePickerInput.types';
 
 const DatePickerInput = ({
