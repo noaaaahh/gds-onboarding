@@ -12,7 +12,7 @@ const DatePickerReset = ({
     children,
     ...props
 }: DatePickerResetProps) => {
-    const { handleChange, defaultDate } = useDatePicker();
+    const { handleChange, defaultDate = null } = useDatePicker();
     const reset = () => handleChange(defaultDate);
 
     const Comp = asChild ? Slot : 'button';
