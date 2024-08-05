@@ -20,7 +20,7 @@ export type InitializeRangeProps = {
 
 export type DatePickerContextType<T extends DateType> = {
     date: T;
-    defaultDate: T;
+    defaultDate?: T;
     handleChange: (date: T) => void;
     initializeRange: (range: InitializeRangeProps) => void;
     mode?: Mode;
@@ -31,7 +31,8 @@ export type DatePickerProviderProps<T> = {
     mode?: Mode;
     locale?: Locale;
     date?: T;
-    onChangeDate?: (date: T) => void;
+    defaultDate?: T;
+    onDateChange?: (date: T) => void;
     children: ReactNode;
 };
 

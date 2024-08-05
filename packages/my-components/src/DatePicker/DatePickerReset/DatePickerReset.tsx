@@ -6,20 +6,27 @@ import { useDatePicker } from '../DatePicker.context';
 import IconBase from '../../Icon/IconBase';
 import styles from './DatePickerReset.module.scss';
 import { DatePickerResetProps } from './DatePickerReset.types';
+import { RESET } from '../DatePicker.constants';
+import { isDateValue } from '../DatePicker.utils';
 
 const DatePickerReset = ({
     asChild = false,
     children,
     ...props
 }: DatePickerResetProps) => {
-    const { handleChange, defaultDate } = useDatePicker();
-    const reset = () => handleChange(defaultDate);
+    const { mode, handleChange, defaultDate = null, locale } = useDatePicker();
+    const reset = () => {
+        if (mode === 'single') return handleChange(defaultDate);
+        if (!isDateValue(defaultDate)) return handleChange(defaultDate);
+
+        handleChange({ from: defaultDate, to: defaultDate });
+    };
 
     const Comp = asChild ? Slot : 'button';
     const customReset = (
         <>
             <RefreshIcon />
-            {children || '초기화'}
+            {children || RESET[locale]}
         </>
     );
 

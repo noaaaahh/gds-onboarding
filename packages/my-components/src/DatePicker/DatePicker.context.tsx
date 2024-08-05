@@ -7,29 +7,34 @@ import {
     InitializeRangeProps,
 } from './DatePicker.types';
 import once from 'lodash.once';
+import { useControllableState } from '@radix-ui/react-use-controllable-state';
+import { isDateValue } from './DatePicker.utils';
 
 const createDatePickerContext = once(<T extends DateType>() =>
     createContext<DatePickerContextType<T>>({} as DatePickerContextType<T>),
 );
 
 const DatePickerProvider = <T extends DateType>({
-    date,
-    onChangeDate,
-    mode,
+    date: propDate,
+    defaultDate,
+    onDateChange: onChangeDate,
+    mode = 'single',
     locale = 'ko',
     children,
 }: DatePickerProviderProps<T>) => {
     const DatePickerContext = createDatePickerContext<T>();
-    const [innerDate, setInnerDate] = useState<T>(date as T);
-    const [defaultDate, setDefaultDate] = useState<T>(date as T);
+    const [date = null as T, setDate] = useControllableState<T>({
+        prop: propDate,
+        defaultProp: defaultDate,
+        onChange: onChangeDate,
+    });
     const [range, setRange] = useState<InitializeRangeProps>({
         minDate: new Date('1970.01.01'),
         maxDate: new Date('2999.12.31'),
     });
 
     const handleChange = (nextDate: T) => {
-        setInnerDate(nextDate);
-        onChangeDate?.(nextDate);
+        setDate(nextDate);
     };
 
     const initializeRange = ({ minDate, maxDate }: InitializeRangeProps) => {
@@ -38,16 +43,18 @@ const DatePickerProvider = <T extends DateType>({
     };
 
     useEffect(() => {
-        if (mode === 'range' && date === undefined) {
-            const initialDate = { from: null, to: null };
-            handleChange(initialDate as T);
-            setDefaultDate(initialDate as T);
+        if (mode === 'single') return;
 
-            return;
+        const initDate = date || defaultDate || null;
+
+        if (isDateValue(initDate)) {
+            const initialRangeDate = {
+                from: initDate,
+                to: initDate,
+            } as T;
+
+            handleChange(initialRangeDate);
         }
-
-        setInnerDate(date as T);
-        setDefaultDate(date as T);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -55,7 +62,7 @@ const DatePickerProvider = <T extends DateType>({
         <DatePickerContext.Provider
             value={{
                 ...range,
-                date: innerDate,
+                date,
                 defaultDate,
                 initializeRange,
                 handleChange,

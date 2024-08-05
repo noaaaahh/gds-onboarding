@@ -5,6 +5,7 @@ import React, { ReactNode, useState } from 'react';
 import DatePicker, { RangeDateValue } from '../../my-components/src/DatePicker';
 import Button from '../../my-components/src/Button';
 import Stack from '../../my-components/src/Stack';
+import { argTypes } from './utils';
 
 const meta: Meta<typeof DatePicker> = {
     title: 'DatePicker',
@@ -12,16 +13,27 @@ const meta: Meta<typeof DatePicker> = {
         layout: 'centered',
     },
     tags: ['autodocs'],
+    argTypes: {
+        open: argTypes({ control: 'boolean' }),
+        modal: argTypes({ control: 'boolean' }),
+        locale: argTypes({
+            control: 'inline-radio',
+            options: ['ko', 'ja', 'en'],
+        }),
+    },
+    args: {
+        locale: 'ko',
+    },
 };
 
 export default meta;
 type Story = StoryObj<typeof DatePicker>;
 
 export const Default: Story = {
-    render: () => {
+    render: (args) => {
         return (
             <div style={{ width: '500px', height: '100dvh' }}>
-                <DatePicker locale="ko">
+                <DatePicker {...args} defaultDate={new Date('1998.5.19')}>
                     <DatePicker.Trigger />
                     <DatePicker.Content>
                         <div
@@ -61,7 +73,7 @@ export const Default: Story = {
 };
 
 export const WithSidebar: Story = {
-    render: () => {
+    render: (args) => {
         const [date, setDate] = useState<RangeDateValue>();
         const handleRangeDate = (range: 'month' | 'week' | 'today') => {
             const date = new Date();
@@ -77,8 +89,10 @@ export const WithSidebar: Story = {
                 <DatePicker
                     date={date}
                     onChangeDate={(date) => setDate(date)}
-                    locale="ko"
                     mode="range"
+                    locale={args.locale}
+                    modal={args.modal}
+                    open={args.open}
                 >
                     <DatePicker.Trigger />
                     <DatePicker.Content>
