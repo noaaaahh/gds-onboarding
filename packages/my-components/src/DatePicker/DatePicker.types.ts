@@ -32,7 +32,7 @@ export type DatePickerProviderProps<T> = {
     locale?: Locale;
     date?: T;
     defaultDate?: T;
-    onChangeDate?: (date: T) => void;
+    onDateChange?: (date: T) => void;
     children: ReactNode;
 };
 

@@ -17,7 +17,7 @@ const createDatePickerContext = once(<T extends DateType>() =>
 const DatePickerProvider = <T extends DateType>({
     date: propDate,
     defaultDate,
-    onChangeDate,
+    onDateChange: onChangeDate,
     mode = 'single',
     locale = 'ko',
     children,
