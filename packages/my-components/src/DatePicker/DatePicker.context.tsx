@@ -17,7 +17,7 @@ const createDatePickerContext = once(<T extends DateType>() =>
 const DatePickerProvider = <T extends DateType>({
     date: propDate,
     defaultDate,
-    onDateChange: onChangeDate,
+    onDateChange,
     mode = 'single',
     locale = 'ko',
     children,
@@ -26,7 +26,7 @@ const DatePickerProvider = <T extends DateType>({
     const [date = null as T, setDate] = useControllableState<T>({
         prop: propDate,
         defaultProp: defaultDate,
-        onChange: onChangeDate,
+        onChange: onDateChange,
     });
     const [range, setRange] = useState<InitializeRangeProps>({
         minDate: new Date('1970.01.01'),

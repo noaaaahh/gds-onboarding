@@ -88,7 +88,7 @@ export const WithSidebar: Story = {
             <div style={{ width: '500px', height: '100dvh' }}>
                 <DatePicker
                     date={date}
-                    onChangeDate={(date) => setDate(date)}
+                    onDateChange={(date) => setDate(date)}
                     mode="range"
                     locale={args.locale}
                     modal={args.modal}
