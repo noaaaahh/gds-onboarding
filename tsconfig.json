@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        /* Language and Environment */
+        "target": "ES5", // 변환할 자바스크립트 버전
+        "lib": ["ESNext", "DOM"], // 컴파일 시 포함할 라이브러리 버전
+        "jsx": "react", // jsx 파일 컴파일 시 내보내지는 형식
+
+        /* Modules */
+        "module": "ESNext", // 프로그램에서 사용할 모듈 버전
+        "moduleResolution": "node10", // 모듈 해석 방식
+        "baseUrl": "./",
+
+        /* JavaScript Support */
+        "allowJs": false,
+        // "checkJs": true,
+
+        /* Emit */
+        "declaration": true, // .d.ts 파일 생성
+        "declarationMap": true, // 생성된 .d.ts 파일에 대한 소스맵 생성
+        "sourceMap": true, // 소스맵 생성
+        "emitDeclarationOnly": true,
+
+        /* Interop Constraints */
+        "esModuleInterop": true, // 모듈 시스템 간의 상호 운용성 개선 (esmodule에서 require, commonjs에서 import 가능)
+        "forceConsistentCasingInFileNames": true, // 동일 파일 참조에 대해 일관성 없는 대소문자 비활성
+
+        /* Type Checking */
+        "strict": true, // 엄격한 타입 검사, 모든 noImplicit 관련 옵션을 활성화
+
+        /* Completeness */
+        "skipLibCheck": true // .d.ts 파일에 대한 타입 체킹 건너뛰기
+    },
+
+    "include": ["packages/**/*"],
+    "exclude": ["*.config.*", "**/node_modules", "**/dist", "*.json"]
+}

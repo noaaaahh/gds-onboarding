@@ -1,0 +1,39 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--Spacing-space-150, 12px); // space-150: 12px, .75rem
+    flex-shrink: 0;
+
+    width: 100%;
+    height: var(--dimension-700, 56px); // --demension-700: 56px
+    padding: 15px var(--Spacing-space-300, 24px); // space-300: 24px, 1.5rem
+
+    &_title {
+        margin: 0;
+
+        color: var(--semantic-color-text-text-normal, #2b2d36);
+        font-feature-settings: 'clig' off, 'liga' off;
+
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 26px; /* 144.444% */
+        letter-spacing: -0.1px;
+    }
+
+    &_close {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        cursor: pointer;
+
+        &:focus {
+            box-shadow: 0 0 2px 2px blanchedalmond;
+        }
+    }
+}

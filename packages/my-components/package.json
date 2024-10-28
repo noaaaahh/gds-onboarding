@@ -1,0 +1,45 @@
+{
+    "name": "@noahnoahchoi/my-components",
+    "version": "0.1.6",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/types/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "sideEffect": false,
+    "author": "noahnoahchoi",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/noahnoahchoi/gds-onboarding.git",
+        "directory": "packages/my-components"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
+    "license": "ISC",
+    "scripts": {
+        "build": "yarn build:typings && rollup -c ../../rollup.config.js",
+        "build:typings": "rm -rf ./dist && tsc -p ./tsconfig.json"
+    },
+    "devDependencies": {
+        "@types/react": "^18.3.3",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
+    },
+    "peerDependencies": {
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
+    },
+    "dependencies": {
+        "@radix-ui/react-dialog": "^1.1.1",
+        "@radix-ui/react-popover": "^1.1.1",
+        "@radix-ui/react-slot": "^1.1.0",
+        "@radix-ui/react-use-controllable-state": "^1.1.0",
+        "@types/lodash.once": "^4.1.9",
+        "clsx": "^2.1.1",
+        "lodash.once": "^4.1.1",
+        "react-calendar": "^5.0.0",
+        "react-use": "^17.5.1"
+    }
+}
