@@ -25,16 +25,12 @@ jobs:
                   node-version: 18.20.0
                   registry-url: 'https://npm.pkg.github.com'
 
-            - name: inputs.canary == 'true'
-              run: echo $
-              if: ${{inputs.canary == 'true'}}
-
             - name: inputs.canary == true
               run: echo $
               if: ${{inputs.canary == true}}
 
-            - name: inputs.canary == 'true'
-              run: echo ${{inputs.canary}}
+            - name: get base ref
+              run: echo ${{github.base_ref}}
 
             - name: Install Yarn
               run: |
