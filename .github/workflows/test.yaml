@@ -1,0 +1,38 @@
+name: 'TEST'
+
+on:
+    workflow_dispatch:
+        inputs:
+            canary:
+                description: 'This is about the canary version.'
+                type: boolean
+                default: false
+
+jobs:
+    job_build:
+        name: Deploy Packages Dev
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+              with:
+                  submodules: true
+                  fetch-depth: 0
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 18.20.0
+                  registry-url: 'https://npm.pkg.github.com'
+
+            - name: check canary version
+              run: echo $
+              if: ${{inputs.canary == 'true' || inputs.canary == true}}
+
+            - name: Install Yarn
+              run: |
+                  curl -L https://yarnpkg.com/install.sh | bash
+                  export PATH="$HOME/.local/bin:$PATH"
+
+        #   - name: Publish Experimental Version
+        #     run: BRANCH_NAME=${{ github.ref_name }} yarn publish:experimental
